@@ -7,6 +7,7 @@ import React from 'react'
 
 import type { StaticImageData } from 'next/image'
 import type { MediaProps } from '../types'
+import { getClientSideURL } from '@/lib/utilities/getURL'
 
 const { breakpoints } = cssVariables
 
@@ -50,8 +51,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
     const filename = fullFilename
 
-    // TODO: update
-    src = `${process.env.NEXT_PUBLIC_SERVER_URL}${url}`
+    src = `${getClientSideURL()}${url}`
   }
 
   const loading = loadingFromProps || 'lazy'

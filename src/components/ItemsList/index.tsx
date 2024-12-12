@@ -5,6 +5,9 @@ import { Price } from '@/components/Price'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { isProduct } from '@/lib/typeguards/isProduct'
+import { isMedia } from '@/lib/typeguards/isMedia'
+import { isValidInfo } from '@/lib/typeguards/isValidInfo'
 
 interface Props {
   items: CartItems
@@ -14,12 +17,12 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
   return (
     <ul className="flex-grow overflow-auto py-4">
       {items?.map((item, i) => {
-        if (typeof item.product === 'string' || !item)
+        if (typeof item.product === 'number' || !item)
           return <React.Fragment key={item.id} />
 
         const product = item.product
         let image =
-          product?.meta?.image && typeof product?.meta?.image !== 'string'
+          product?.meta?.image && typeof product?.meta?.image !== 'number'
             ? product.meta.image
             : undefined
 
@@ -28,16 +31,18 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
           ? item.product.variants.variants.find((v) => v.id === item.variant)
           : undefined
 
-        const info = isVariant
-          ? (variant?.info as InfoType)
-          : (product?.info as InfoType)
+        const info =
+          isVariant && variant?.info && isValidInfo(variant.info)
+            ? variant.info
+            : product?.info && isValidInfo(product.info)
+              ? product.info
+              : undefined
 
+        // Either regular product image OR variant image
         if (isVariant) {
-          if (
-            variant?.images?.[0]?.image &&
-            typeof variant?.images?.[0]?.image !== 'string'
-          ) {
-            image = variant.images[0].image
+          const variantImage = variant?.images?.[0]
+          if (variantImage && isMedia(variantImage)) {
+            image = variantImage
           }
         }
 
@@ -64,12 +69,18 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
 
                 <div className="flex flex-1 flex-col text-base">
                   <span className="leading-tight">{product?.title}</span>
-                  {isVariant && info.options?.length ? (
+                  {isVariant && info?.options?.length ? (
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">
                       {info.options
-                        ?.map((option) => {
-                          return option.label
-                        })
+                        .filter(
+                          (option): option is InfoType['options'][number] =>
+                            typeof option === 'object' &&
+                            option !== null &&
+                            'label' in option &&
+                            'key' in option &&
+                            'slug' in option
+                        )
+                        .map((option) => option.label)
                         .join(', ')}
                     </p>
                   ) : null}

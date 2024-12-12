@@ -1,6 +1,6 @@
 import type { Media as MediaType } from '@/payload-types'
 
-import { Media } from '@/components/Media'
+import { MediaComponent } from '@/components/MediaComponent'
 import { Label } from '@/components/Label'
 import clsx from 'clsx'
 import React from 'react'
@@ -34,7 +34,7 @@ export function GridTileImage({
     >
       {props.media ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
-        <Media
+        <MediaComponent
           className={clsx('relative h-full w-full object-cover', {
             'transition duration-300 ease-in-out group-hover:scale-105':
               isInteractive

@@ -76,7 +76,7 @@ export function AddToCart({ product, variants }: Props) {
         e.preventDefault()
 
         addItemToCart({
-          id: selectedVariantId ?? product.id,
+          id: (selectedVariantId ?? product.id).toString(),
           product,
           quantity: 1,
           url: productUrl,

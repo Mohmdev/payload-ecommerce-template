@@ -1,7 +1,7 @@
 'use client'
 
 import { LoadingShimmer } from '@/components/LoadingShimmer'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaComponent'
 import { Message } from '@/components/Message'
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'

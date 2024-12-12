@@ -2,7 +2,7 @@ import type { Order } from '@/payload-types'
 import type { Metadata } from 'next'
 
 import { ItemsList } from '@/components/ItemsList'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaComponent'
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
 import { formatDateTime } from '@/lib/utilities/formatDateTime'

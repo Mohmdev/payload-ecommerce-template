@@ -4,14 +4,16 @@ import { Grid } from '@/components/grid'
 import { GridTileImage } from '@/components/grid/tile'
 import Link from 'next/link'
 import React from 'react'
+import { isMedia } from '@/lib/typeguards/isMedia'
 
 export function ProductGridItems({ products }: { products: Product[] }) {
   return (
     <React.Fragment>
       {products.map((product) => {
         const image =
-          typeof product.meta?.image !== 'string'
-            ? product.meta?.image
+          typeof product.meta?.image !== 'number' &&
+          isMedia(product.meta?.image)
+            ? product.meta.image
             : undefined
 
         if (!image) return null

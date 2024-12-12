@@ -2,11 +2,10 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from '@/lib/utilities/cn'
 import React from 'react'
-import { RichText } from '@/components/RichText'
+import RichText from '@/components/RichText'
+import { MediaComponent } from '@/components/MediaComponent'
 
 import type { Page } from '@/payload-types'
-
-import { Media } from '@/components/Media'
 
 type Props = Extract<Page['layout'][0], { blockType: 'mediaBlock' }> & {
   breakout?: boolean
@@ -16,6 +15,7 @@ type Props = Extract<Page['layout'][0], { blockType: 'mediaBlock' }> & {
   id?: string
   imgClassName?: string
   staticImage?: StaticImageData
+  disableInnerContainer?: boolean
 }
 
 export const MediaBlock: React.FC<Props> = (props) => {
@@ -44,11 +44,11 @@ export const MediaBlock: React.FC<Props> = (props) => {
     >
       {position === 'fullscreen' && (
         <div className="relative">
-          <Media resource={media} src={staticImage} />
+          <MediaComponent resource={media} src={staticImage} />
         </div>
       )}
       {position === 'default' && (
-        <Media
+        <MediaComponent
           imgClassName={cn('rounded', imgClassName)}
           resource={media}
           src={staticImage}
@@ -64,7 +64,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
             captionClassName
           )}
         >
-          <RichText content={caption} enableGutter={false} />
+          <RichText data={caption} enableGutter={false} />
         </div>
       )}
     </div>

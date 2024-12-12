@@ -2,7 +2,7 @@
 
 import type { Media as MediaType } from '@/payload-types'
 
-import { Media } from '@/components/Media'
+import { MediaComponent } from '@/components/MediaComponent'
 import { GridTileImage } from '@/components/grid/tile'
 import { createUrl } from '@/lib/utilities/createUrl'
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
@@ -33,7 +33,7 @@ export function Gallery({ images }: { images: MediaType[] }) {
   return (
     <React.Fragment>
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
-        {images[imageIndex] && <Media resource={images[imageIndex]} />}
+        {images[imageIndex] && <MediaComponent resource={images[imageIndex]} />}
 
         {images.length > 1 ? (
           <div className="absolute bottom-[15%] flex w-full justify-center">

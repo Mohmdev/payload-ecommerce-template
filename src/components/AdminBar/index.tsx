@@ -6,11 +6,22 @@ import { cn } from '@/lib/utilities/cn'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import './index.scss'
+
+import { getClientSideURL } from '@/lib/utilities/getURL'
+
+const baseClass = 'admin-bar'
 
 const collectionLabels = {
   pages: {
     plural: 'Pages',
     singular: 'Page'
+  },
+  products: {
+    plural: 'Products',
+    singular: 'Product'
   },
   posts: {
     plural: 'Posts',
@@ -31,6 +42,7 @@ export const AdminBar: React.FC<{
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
+  const router = useRouter()
 
   const onAuthChange = React.useCallback((user) => {
     setShow(user?.id)
@@ -38,7 +50,7 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn('bg-black py-2 text-white', {
+      className={cn(baseClass, 'bg-black py-2 text-white', {
         block: show,
         hidden: !show
       })}
@@ -52,7 +64,7 @@ export const AdminBar: React.FC<{
             logo: 'text-white',
             user: 'text-white'
           }}
-          cmsURL={process.env.NEXT_PUBLIC_SERVER_URL}
+          cmsURL={getClientSideURL()}
           collection={collection}
           collectionLabels={{
             plural: collectionLabels[collection]?.plural || 'Pages',
@@ -60,6 +72,12 @@ export const AdminBar: React.FC<{
           }}
           logo={<Title />}
           onAuthChange={onAuthChange}
+          onPreviewExit={() => {
+            fetch('/next/exit-preview').then(() => {
+              router.push('/')
+              router.refresh()
+            })
+          }}
           style={{
             backgroundColor: 'transparent',
             padding: 0,

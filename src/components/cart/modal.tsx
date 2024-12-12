@@ -21,6 +21,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { DeleteItemButton } from './delete-item-button'
 import { EditItemQuantityButton } from './edit-item-quantity-button'
 import { OpenCart } from './open-cart'
+import { isProduct } from '@/lib/typeguards/isProduct'
+import { isMedia } from '@/lib/typeguards/isMedia'
 
 export function CartModal() {
   const { cart, cartQuantity, cartTotal } = useCart()
@@ -85,28 +87,30 @@ export function CartModal() {
 
                   const product = item.product
                   let image =
-                    product?.meta?.image &&
-                    typeof product?.meta?.image !== 'string'
+                    isProduct(product) &&
+                    product.meta?.image &&
+                    typeof product.meta.image !== 'string'
                       ? product.meta.image
                       : undefined
 
                   const isVariant = Boolean(item.variant)
-                  const variant = item.product?.variants?.variants?.length
-                    ? item.product.variants.variants.find(
-                        (v) => v.id === item.variant
-                      )
-                    : undefined
+                  const variant =
+                    isProduct(product) && product.variants?.variants?.length
+                      ? product.variants.variants.find(
+                          (v) => v.id === item.variant
+                        )
+                      : undefined
 
                   const info = isVariant
                     ? (variant?.info as InfoType)
-                    : (product?.info as InfoType)
+                    : isProduct(product)
+                      ? (product.info as InfoType)
+                      : undefined
 
                   if (isVariant) {
-                    if (
-                      variant?.images?.[0]?.image &&
-                      typeof variant.images?.[0]?.image !== 'string'
-                    ) {
-                      image = variant.images[0].image
+                    const variantImage = variant?.images?.[0]
+                    if (variantImage && isMedia(variantImage)) {
+                      image = variantImage
                     }
                   }
 
@@ -124,9 +128,13 @@ export function CartModal() {
                           href={item.url}
                         >
                           <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                            {image?.url && (
+                            {image && isMedia(image) && image.url && (
                               <Image
-                                alt={image?.alt || product?.title || ''}
+                                alt={
+                                  (isMedia(image) ? image.alt : '') ||
+                                  (isProduct(product) ? product.title : '') ||
+                                  ''
+                                }
                                 className="h-full w-full object-cover"
                                 height={64}
                                 src={image.url}
@@ -137,14 +145,12 @@ export function CartModal() {
 
                           <div className="flex flex-1 flex-col text-base">
                             <span className="leading-tight">
-                              {product?.title}
+                              {isProduct(product) ? product.title : ''}
                             </span>
-                            {isVariant && info.options?.length ? (
+                            {isVariant && info?.options?.length ? (
                               <p className="text-sm text-neutral-500 dark:text-neutral-400">
                                 {info.options
-                                  ?.map((option) => {
-                                    return option.label
-                                  })
+                                  .map((option) => option.label)
                                   .join(', ')}
                               </p>
                             ) : null}
