@@ -1,3 +1,15 @@
 .vercel
 .next
+.tmp
+**/.git
+**/.hg
+**/.pnp.*
+**/.svn
+**/.yarn/**
+**/build
+**/dist/**
+**/node_modules
+**/payload-types.ts
+**/temp
+**/docs/**
 pnpm-lock.yaml

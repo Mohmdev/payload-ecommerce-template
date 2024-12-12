@@ -17,7 +17,7 @@ export async function generateStaticParams() {
     collection: 'pages',
     draft: false,
     limit: 1000,
-    overrideAccess: false,
+    overrideAccess: false
   })
 
   return pages.docs?.map(({ slug }) => slug)
@@ -27,7 +27,7 @@ export default async function Page({ params: { slug = 'home' } }) {
   const url = '/' + slug
 
   const page = await queryPageBySlug({
-    slug,
+    slug
   })
 
   if (!page) {
@@ -37,16 +37,18 @@ export default async function Page({ params: { slug = 'home' } }) {
   const { hero, layout } = page
 
   return (
-    <article className="pt-16 pb-24">
+    <article className="pb-24 pt-16">
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
     </article>
   )
 }
 
-export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: { slug = 'home' }
+}): Promise<Metadata> {
   const page = await queryPageBySlug({
-    slug,
+    slug
   })
 
   return generateMeta({ doc: page })
@@ -56,7 +58,9 @@ const queryPageBySlug = async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = draftMode()
 
   const payload = await getPayloadHMR({ config: configPromise })
-  const authResult = draft ? await payload.auth({ headers: headers() }) : undefined
+  const authResult = draft
+    ? await payload.auth({ headers: headers() })
+    : undefined
 
   const user = authResult?.user
 
@@ -68,9 +72,9 @@ const queryPageBySlug = async ({ slug }: { slug: string }) => {
     user,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   })
 
   return result.docs?.[0] || null
