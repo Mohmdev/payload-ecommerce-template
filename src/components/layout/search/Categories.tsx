@@ -1,12 +1,12 @@
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import clsx from 'clsx'
+import { getPayload } from 'payload'
+import { cn } from '@/lib/utilities/cn'
 import React, { Suspense } from 'react'
 
 import { FilterList } from './filter'
 
 async function CategoryList() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const categories = (
     await payload.find({
@@ -15,6 +15,7 @@ async function CategoryList() {
     })
   ).docs?.map((category) => {
     return {
+      // @ts-expect-error
       path: `/search/${category.slug}`,
       title: category.title
     }
@@ -32,16 +33,16 @@ export function Categories() {
     <Suspense
       fallback={
         <div className="col-span-2 hidden h-[400px] w-full flex-none py-4 lg:block">
-          <div className={clsx(skeleton, activeAndTitles)} />
-          <div className={clsx(skeleton, activeAndTitles)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
-          <div className={clsx(skeleton, items)} />
+          <div className={cn(skeleton, activeAndTitles)} />
+          <div className={cn(skeleton, activeAndTitles)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
+          <div className={cn(skeleton, items)} />
         </div>
       }
     >

@@ -4,7 +4,7 @@ import type {
 } from 'src/payload-types'
 
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import React from 'react'
 import { RichText } from '@/components/RichText'
 
@@ -27,7 +27,7 @@ export const ArchiveBlock: React.FC<
   let products: Product[] = []
 
   if (populateBy === 'collection') {
-    const payload = await getPayloadHMR({ config: configPromise })
+    const payload = await getPayload({ config: configPromise })
 
     const flattenedCategories = categories?.length
       ? categories.map((category) => {

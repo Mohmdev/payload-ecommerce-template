@@ -5,14 +5,14 @@ import { RenderHero } from '@/fields/heros/RenderHero'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { generateMeta } from '@/lib/utilities/generateMeta'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { draftMode, headers } from 'next/headers'
 import React from 'react'
 
 import type { Page } from '@/payload-types'
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
     collection: 'pages',
     draft: false,
@@ -57,7 +57,7 @@ export async function generateMetadata({
 const queryPageBySlug = async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const authResult = draft
     ? await payload.auth({ headers: headers() })
     : undefined

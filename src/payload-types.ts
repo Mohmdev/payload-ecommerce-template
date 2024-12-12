@@ -168,6 +168,11 @@ export interface Product {
   stock?: number | null;
   price?: number | null;
   currency?: string | null;
+  meta?: {
+    title?: string | null;
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   relatedProducts?: (number | Product)[] | null;
   publishedOn?: string | null;
   categories?: (number | Category)[] | null;
@@ -1089,6 +1094,13 @@ export interface ProductsSelect<T extends boolean = true> {
   stock?: T;
   price?: T;
   currency?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   relatedProducts?: T;
   publishedOn?: T;
   categories?: T;

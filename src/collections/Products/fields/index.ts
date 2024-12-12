@@ -12,6 +12,13 @@ import { slugField } from '@/fields/slug/config'
 
 import type { Field } from 'payload'
 import { productVariants } from './variants'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField
+} from '@payloadcms/plugin-seo/fields'
 
 export const productFields: Field[] = [
   {
@@ -63,6 +70,33 @@ export const productFields: Field[] = [
       {
         label: 'Product Details',
         fields: productVariants
+      },
+      {
+        name: 'meta',
+        label: 'SEO',
+        fields: [
+          OverviewField({
+            titlePath: 'meta.title',
+            descriptionPath: 'meta.description',
+            imagePath: 'meta.image'
+          }),
+          MetaTitleField({
+            hasGenerateFn: true
+          }),
+          MetaImageField({
+            relationTo: 'media'
+          }),
+
+          MetaDescriptionField({}),
+          PreviewField({
+            // if the `generateUrl` function is configured
+            hasGenerateFn: true,
+
+            // field paths to match the target field for data
+            titlePath: 'meta.title',
+            descriptionPath: 'meta.description'
+          })
+        ]
       }
     ]
   },

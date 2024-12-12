@@ -1,55 +1,16 @@
 import type { Media, Product } from '@/payload-types'
 import type { Metadata } from 'next'
-
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { GridTileImage } from '@/components/grid/tile'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
 import { HIDDEN_PRODUCT_TAG } from '@/lib/constants'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { draftMode, headers } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React, { Suspense } from 'react'
-
-/* export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string }
-}): Promise<Metadata> {
-  const product = await queryProductBySlug(params.handle)
-
-  if (!product) return notFound()
-
-  const { altText: alt, height, url, width } = product.featuredImage || {}
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
-
-  return {
-    description: product.seo.description || product.description,
-    openGraph: url
-      ? {
-          images: [
-            {
-              alt,
-              height,
-              url,
-              width,
-            },
-          ],
-        }
-      : null,
-    robots: {
-      follow: indexable,
-      googleBot: {
-        follow: indexable,
-        index: indexable,
-      },
-      index: indexable,
-    },
-    title: product.seo.title || product.title,
-  }
-} */
 
 export default async function ProductPage({
   params
@@ -73,7 +34,8 @@ export default async function ProductPage({
     '@context': 'https://schema.org',
     '@type': 'Product',
     description: product.description,
-    image: metaImage?.url,
+    image:
+      metaImage && typeof metaImage === 'object' ? metaImage.url : undefined,
     offers: {
       '@type': 'AggregateOffer',
       availability: hasStock
@@ -90,17 +52,15 @@ export default async function ProductPage({
     ) ?? []
 
   const gallery = product.gallery
-    ?.filter((image) => Boolean(image.image && typeof image.image !== 'string'))
-    .map((image) => {
-      if (image.image && typeof image.image !== 'string') return image.image
-    }) as Media[]
+    ?.filter((item): item is Media => typeof item === 'object')
+    .map((item) => item) as Media[]
 
   if (variants?.length) {
     variants.forEach((variant) => {
       if (variant?.images?.length) {
-        variant.images.forEach((image) => {
-          if (image.image && typeof image.image !== 'string') {
-            gallery?.push(image.image)
+        variant.images.forEach((item) => {
+          if (typeof item === 'object') {
+            gallery?.push(item)
           }
         })
       }
@@ -177,11 +137,12 @@ function RelatedProducts({ products }: { products: Product[] }) {
 }
 
 const queryProductBySlug = async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = draftMode()
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config: configPromise })
 
-  const payload = await getPayloadHMR({ config: configPromise })
   const authResult = draft
-    ? await payload.auth({ headers: headers() })
+    ? // @ts-expect-error
+      await payload.auth({ headers: headers() })
     : undefined
 
   const user = authResult?.user
@@ -202,3 +163,41 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 }
+
+/* export async function generateMetadata({
+  params,
+}: {
+  params: { handle: string }
+}): Promise<Metadata> {
+  const product = await queryProductBySlug(params.handle)
+
+  if (!product) return notFound()
+
+  const { altText: alt, height, url, width } = product.featuredImage || {}
+  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
+
+  return {
+    description: product.seo.description || product.description,
+    openGraph: url
+      ? {
+          images: [
+            {
+              alt,
+              height,
+              url,
+              width,
+            },
+          ],
+        }
+      : null,
+    robots: {
+      follow: indexable,
+      googleBot: {
+        follow: indexable,
+        index: indexable,
+      },
+      index: indexable,
+    },
+    title: product.seo.title || product.title,
+  }
+} */
