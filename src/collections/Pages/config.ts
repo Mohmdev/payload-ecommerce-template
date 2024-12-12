@@ -10,8 +10,8 @@ import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { hero } from '@/fields/heros/config'
-import { adminsOrPublished } from '@/lib/access/adminsOrPublished'
-import { admins } from '@/lib/access/admins'
+import { adminsOrPublished } from '@/services/access/adminsOrPublished'
+import { admins } from '@/services/access/admins'
 import {
   MetaDescriptionField,
   MetaImageField,

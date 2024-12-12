@@ -11,7 +11,7 @@ const { SITE_NAME } = process.env
 import type { Header } from 'src/payload-types'
 
 import AccountDrawer from '@/components/AccountDrawer'
-import { getCachedGlobal } from '@/lib/utilities/getGlobals'
+import { getCachedGlobal } from '@/lib/data/getGlobals'
 
 export async function Header() {
   const header: Header = await getCachedGlobal('header', 1)()

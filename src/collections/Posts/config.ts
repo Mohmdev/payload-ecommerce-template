@@ -24,8 +24,8 @@ import {
   PreviewField
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug/config'
-import { admins } from '@/lib/access/admins'
-import { adminsOrPublished } from '@/lib/access/adminsOrPublished'
+import { admins } from '@/services/access/admins'
+import { adminsOrPublished } from '@/services/access/adminsOrPublished'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',

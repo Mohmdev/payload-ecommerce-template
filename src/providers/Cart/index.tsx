@@ -3,7 +3,7 @@
 import type { InfoType } from '@/collections/Products/ui/types'
 import type { Product, User } from '@/payload-types'
 
-import { parse } from 'path'
+// import { parse } from 'path'
 import React, {
   createContext,
   useCallback,
@@ -56,7 +56,12 @@ const flattenCart = (cart: User['cart']): User['cart'] => ({
 
       let stripeProductID
 
-      if (typeof item.product !== 'string') {
+      if (
+        // ensure product is a Product object
+        typeof item.product !== 'string' &&
+        typeof item.product === 'object'
+      ) {
+        // if cart item is a variant
         if (item.variant) {
           const variant = item.product?.variants?.variants?.find(
             (v) => v.id === item.variant
@@ -64,6 +69,7 @@ const flattenCart = (cart: User['cart']): User['cart'] => ({
           if (variant?.stripeProductID)
             stripeProductID = variant.stripeProductID
         }
+        // if cart item is a product
         if (item.product.stripeProductID)
           stripeProductID = item.product.stripeProductID
       }
@@ -72,7 +78,10 @@ const flattenCart = (cart: User['cart']): User['cart'] => ({
         ...item,
         // flatten relationship to product
         product:
-          typeof item.product === 'string' ? item.product : item.product.id,
+          // Product object that has an id property when it's not a string
+          typeof item.product === 'string'
+            ? item.product
+            : (item.product as Product).id,
         quantity: typeof item?.quantity === 'number' ? item?.quantity : 0,
         stripeProductID,
         variant: item?.variant
@@ -224,9 +233,10 @@ export const CartProvider = (props) => {
             if (variantId) {
               return variant === variantId
             } else {
+              // Here we need Product object, not number.
               return typeof product === 'string'
                 ? product === incomingProduct.id
-                : product?.id === incomingProduct.id
+                : (product as Product).id === incomingProduct.id
             }
           }) // eslint-disable-line function-paren-newline
         )
@@ -278,14 +288,19 @@ export const CartProvider = (props) => {
     const newTotal =
       cart?.items?.reduce((acc, item) => {
         if (typeof item.product === 'string') return acc
-        const itemInfo = item.variant
-          ? (item.product?.variants?.variants?.find(
-              (v) => v.id === item.variant
-            )?.info as InfoType)
-          : (item.product?.info as InfoType)
 
-        const itemCost = itemInfo.price.amount * item.quantity!
-        return acc + (itemCost || 0)
+        //  ensure product is Product object
+        if (typeof item.product === 'object') {
+          const itemInfo = item.variant
+            ? ((item.product as Product)?.variants?.variants?.find(
+                (v) => v.id === item.variant
+              )?.info as InfoType)
+            : ((item.product as Product)?.info as InfoType)
+
+          const itemCost = itemInfo.price.amount * item.quantity!
+          return acc + (itemCost || 0)
+        }
+        return acc
       }, 0) || 0
 
     const newQuantity =

@@ -6,10 +6,10 @@ import { useCallback, useEffect, useRef } from 'react'
 
 type UseClickableCardType<T extends HTMLElement> = {
   card: {
-    ref: RefObject<T>
+    ref: RefObject<T | null>
   }
   link: {
-    ref: RefObject<HTMLAnchorElement>
+    ref: RefObject<HTMLAnchorElement | null>
   }
 }
 
@@ -19,7 +19,7 @@ interface Props {
   scroll?: boolean
 }
 
-export function useClickableCard<T extends HTMLElement>({
+function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,
   scroll = true
@@ -100,12 +100,12 @@ export function useClickableCard<T extends HTMLElement>({
 
   return {
     card: {
-      // @ts-expect-error
       ref: card
     },
     link: {
-      // @ts-expect-error
       ref: link
     }
   }
 }
+
+export default useClickableCard

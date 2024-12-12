@@ -2,7 +2,7 @@ import type { Access, Where } from 'payload'
 
 import * as qs from 'qs-esm'
 
-import { checkRole } from '@/lib/access/checkRole'
+import { checkRole } from '@/services/access/checkRole'
 
 /**
  * Access control for Orders based on the user's role and the query string

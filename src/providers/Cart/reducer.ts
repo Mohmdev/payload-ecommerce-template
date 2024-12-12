@@ -80,17 +80,24 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
       const productId =
         typeof incomingItem.product === 'string'
           ? incomingItem.product
-          : incomingItem?.product?.id
+          : typeof incomingItem.product === 'object' &&
+              incomingItem.product !== null
+            ? incomingItem.product.id
+            : undefined
 
       const indexInCart = cart?.items?.findIndex(({ product, variant }) => {
         if (incomingItem.variant) {
           return variant === incomingItem.variant
         } else {
-          return typeof product === 'string'
-            ? product === productId
-            : product?.id === productId
+          if (typeof product === 'string') {
+            return product === productId
+          }
+          if (typeof product === 'object' && product !== null) {
+            return product.id === productId
+          }
+          return false
         }
-      }) // eslint-disable-line function-paren-newline
+      })
 
       const withAddedItem = [...(cart?.items || [])]
 

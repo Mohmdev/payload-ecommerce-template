@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { RenderParams } from '@/components/RenderParams'
-import { getMeUser } from '@/lib/utilities/getMeUser'
+import { getMeUser } from '@/lib/data/getMeUser'
 import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import React from 'react'
 

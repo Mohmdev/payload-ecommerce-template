@@ -1,16 +1,16 @@
 import type { User } from '@/payload-types'
 import type { CollectionConfig } from 'payload'
 
-import { admins } from '@/lib/access/admins'
-import { anyone } from '@/lib/access/anyone'
-import { adminsAndUser } from '@/lib/access/adminsAndUser'
-import { checkRole } from '@/lib/access/checkRole'
+import { admins } from '@/services/access/admins'
+import { anyone } from '@/services/access/anyone'
+import { adminsAndUser } from '@/services/access/adminsAndUser'
+import { checkRole } from '@/services/access/checkRole'
 
 import { customerProxy } from './endpoints/customer'
 import { createStripeCustomer } from './hooks/createStripeCustomer'
 import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
 
-export const Users: CollectionConfig = {
+export const Users: CollectionConfig<'users'> = {
   slug: 'users',
   access: {
     admin: ({ req: { user } }) => checkRole(['admin'], user),
@@ -21,7 +21,8 @@ export const Users: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['name', 'email', 'roles'],
-    useAsTitle: 'name'
+    useAsTitle: 'name',
+    group: 'Settings'
   },
   auth: {
     forgotPassword: {

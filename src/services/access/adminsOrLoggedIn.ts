@@ -2,7 +2,7 @@ import type { Access, AccessArgs } from 'payload'
 
 import type { User } from '@/payload-types'
 
-import { checkRole } from '@/lib/access/checkRole'
+import { checkRole } from '@/services/access/checkRole'
 
 export const adminsOrLoggedIn: Access = ({
   req: { user }

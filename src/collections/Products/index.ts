@@ -11,12 +11,12 @@ import {
 
 import type { ProductVariant } from './ui/types'
 
-import { admins } from '@/lib/access/admins'
+import { admins } from '@/services/access/admins'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { slugField } from '@/fields/slug/config'
-import { adminsOrPublished } from '@/lib/access/adminsOrPublished'
+import { adminsOrPublished } from '@/services/access/adminsOrPublished'
 
 import { beforeProductChange } from './hooks/beforeChange'
 import { deleteProductFromCarts } from './hooks/deleteProductFromCarts'

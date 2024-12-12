@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-import { admins } from '@/lib/access/admins'
-import { adminsOrPublished } from '@/lib/access/adminsOrPublished'
+import { admins } from '@/services/access/admins'
+import { adminsOrPublished } from '@/services/access/adminsOrPublished'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',

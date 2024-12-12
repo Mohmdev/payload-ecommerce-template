@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
-import { admins } from '@/lib/access/admins'
-import { adminsOrLoggedIn } from '@/lib/access/adminsOrLoggedIn'
-import { adminsOrOrderedByOrPaymentId } from '@/lib/access/adminsOrOrderedByOrPaymentId'
+import { admins } from '@/services/access/admins'
+import { adminsOrLoggedIn } from '@/services/access/adminsOrLoggedIn'
+import { adminsOrOrderedByOrPaymentId } from '@/services/access/adminsOrOrderedByOrPaymentId'
 import { clearUserCart } from './hooks/clearUserCart'
 import { populateOrderedBy } from './hooks/populateOrderedBy'
 import { updateUserOrders } from './hooks/updateUserOrders'

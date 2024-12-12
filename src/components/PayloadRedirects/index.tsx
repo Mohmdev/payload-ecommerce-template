@@ -1,19 +1,23 @@
-import type { Page, Product } from '@/payload-types'
 import type React from 'react'
+import type { Page, Post } from '@/payload-types'
 
-import { getCachedDocument } from '@/lib/utilities/getDocument'
-import { getCachedRedirect } from '@/lib/utilities/getRedirect'
+import { getCachedDocument } from '@/lib/data/getDocument'
+import { getCachedRedirects } from '@/lib/data/getRedirects'
 import { notFound, redirect } from 'next/navigation'
 
 interface Props {
+  disableNotFound?: boolean
   url: string
 }
 
 /* This component helps us with SSR based dynamic redirects */
-export const PayloadRedirects: React.FC<Props> = async ({ url }) => {
-  const slug = url.startsWith('/') ? url : `${url}`
+export const PayloadRedirects: React.FC<Props> = async ({
+  disableNotFound,
+  url
+}) => {
+  const redirects = await getCachedRedirects()()
 
-  const redirectItem = await getCachedRedirect(slug)()
+  const redirectItem = redirects.find((redirect) => redirect.from === url)
 
   if (redirectItem) {
     if (redirectItem.to?.url) {
@@ -28,18 +32,22 @@ export const PayloadRedirects: React.FC<Props> = async ({ url }) => {
 
       const document = (await getCachedDocument(collection, id)()) as
         | Page
-        | Product
+        | Post
       redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
         document?.slug
       }`
     } else {
       redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
-        redirectItem.to?.reference?.value?.slug
+        typeof redirectItem.to?.reference?.value === 'object'
+          ? redirectItem.to?.reference?.value?.slug
+          : ''
       }`
     }
 
     if (redirectUrl) redirect(redirectUrl)
   }
 
-  return notFound()
+  if (disableNotFound) return null
+
+  notFound()
 }
