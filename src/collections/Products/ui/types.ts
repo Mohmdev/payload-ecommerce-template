@@ -1,4 +1,4 @@
-import type { Product } from '@/payload-types'
+// import type { Product } from '@/payload-types'
 
 export type OptionKey = any //Product['variants']['options'][number]
 export type Option = OptionKey['values'][number]

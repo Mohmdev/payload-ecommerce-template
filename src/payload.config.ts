@@ -3,13 +3,6 @@ import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
-import {
-  BoldFeature,
-  ItalicFeature,
-  LinkFeature,
-  UnderlineFeature,
-  lexicalEditor
-} from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -19,10 +12,8 @@ import { Categories } from '@/collections/Categories/config'
 import { Media } from '@/collections/Media/config'
 import { Orders } from '@/collections/Orders'
 import { Pages } from '@/collections/Pages/config'
-import { Products } from '@/collections/Products'
+import { Products } from '@/collections/Products/config'
 import { Users } from '@/collections/Users/config'
-import { createPaymentIntent } from '@/services/endpoints/create-payment-intent'
-import { productsProxy } from '@/services/endpoints/products'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
 import { Posts } from './collections/Posts/config'
@@ -30,23 +21,8 @@ import { getServerSideURL } from './lib/utilities/getURL'
 import { defaultLexical } from './services/editor/defaultLexical'
 import { defaultEndpoints } from './services/endpoints'
 
-// import dotenv from 'dotenv'
-// import { DocumentInfoContext } from '@payloadcms/ui'
-// import { customersProxy } from '@/lib/endpoints/customers'
-// import { paymentSucceeded } from '@/lib/stripe/webhooks/paymentSucceeded'
-// import { productUpdated } from '@/lib/stripe/webhooks/productUpdated'
-
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-export type GenerateTitle2<T = unknown> = (args: {
-  doc: T
-  locale?: string
-}) => Promise<string> | string
-
-const generateTitle: GenerateTitle = <Page>({ doc }) => {
-  return `${doc?.title ?? ''} | My Store`
-}
 
 export default buildConfig({
   globals: [Header, Footer],
@@ -63,12 +39,36 @@ export default buildConfig({
   ],
   admin: {
     components: {
-      beforeLogin: ['@/components/BeforeLogin#BeforeLogin'],
-      beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard']
+      beforeLogin: ['@/components/BeforeLogin'],
+      beforeDashboard: ['@/components/BeforeDashboard']
     },
-    user: Users.slug
+    importMap: {
+      baseDir: path.resolve(dirname)
+    },
+    user: Users.slug,
+    livePreview: {
+      breakpoints: [
+        {
+          label: 'Mobile',
+          name: 'mobile',
+          width: 375,
+          height: 667
+        },
+        {
+          label: 'Tablet',
+          name: 'tablet',
+          width: 768,
+          height: 1024
+        },
+        {
+          label: 'Desktop',
+          name: 'desktop',
+          width: 1440,
+          height: 900
+        }
+      ]
+    }
   },
-
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URI
@@ -82,7 +82,8 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [...plugins],
   secret: process.env.PAYLOAD_SECRET,
-  sharp,
+  // TODO: Fix why this is not working
+  // sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts')
   }

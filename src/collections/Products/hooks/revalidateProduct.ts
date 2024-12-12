@@ -1,45 +1,49 @@
-import type { CollectionAfterChangeHook } from 'payload'
-import type { Payload } from 'payload'
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook
+} from 'payload'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
-// Revalidate the page in the background, so the user doesn't have to wait
-// Notice that the hook itself is not async and we are not awaiting `revalidate`
-// Only revalidate existing docs that are published
-// Don't scope to `operation` in order to purge static demo pages
+import type { Product } from '@/payload-types'
+
 export const revalidateProduct: CollectionAfterChangeHook = ({
   doc,
-  req: { payload }
+  previousDoc,
+  req: { payload, context }
 }) => {
-  if (doc._status === 'published') {
-    void revalidate({ slug: doc.slug, collection: 'products', payload })
-  }
+  if (!context.disableRevalidate) {
+    if (doc._status === 'published') {
+      const path = `/product/${doc.slug}`
 
+      payload.logger.info(`Revalidating post at path: ${path}`)
+
+      revalidatePath(path)
+      revalidateTag('product-sitemap')
+    }
+
+    // If the product was previously published, we need to revalidate the old path
+    if (previousDoc._status === 'published' && doc._status !== 'published') {
+      const oldPath = `/product/${previousDoc.slug}`
+
+      payload.logger.info(`Revalidating old product at path: ${oldPath}`)
+
+      revalidatePath(oldPath)
+      revalidateTag('product-sitemap')
+    }
+  }
   return doc
 }
 
-const revalidate = async (args: {
-  collection: string
-  payload: Payload
-  slug: string
-}): Promise<void> => {
-  const { slug, collection, payload } = args
+export const revalidateDelete: CollectionAfterDeleteHook<Product> = ({
+  doc,
+  req: { context }
+}) => {
+  if (!context.disableRevalidate) {
+    const path = `/product/${doc?.slug}`
 
-  try {
-    const res = await fetch(
-      `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/next/revalidate?secret=${process.env.REVALIDATION_KEY}&collection=${collection}&slug=${slug}`
-    )
-
-    if (res.ok) {
-      payload.logger.info(
-        `Revalidated page '${slug}' in collection '${collection}'`
-      )
-    } else {
-      payload.logger.error(
-        `Error revalidating page '${slug}' in collection '${collection}': ${res}`
-      )
-    }
-  } catch (err: unknown) {
-    payload.logger.error(
-      `Error hitting revalidate route for page '${slug}' in collection '${collection}': ${err}`
-    )
+    revalidatePath(path)
+    revalidateTag('product-sitemap')
   }
+
+  return doc
 }
