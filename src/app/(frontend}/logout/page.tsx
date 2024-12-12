@@ -7,7 +7,7 @@ import { LogoutPage } from './LogoutPage'
 
 export default async function Logout() {
   return (
-    <div className="container max-w-lg my-16">
+    <div className="container my-16 max-w-lg">
       <LogoutPage />
     </div>
   )
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: 'You have been logged out.',
   openGraph: mergeOpenGraph({
     title: 'Logout',
-    url: '/logout',
+    url: '/logout'
   }),
-  title: 'Logout',
+  title: 'Logout'
 }

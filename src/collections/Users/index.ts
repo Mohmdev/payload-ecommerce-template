@@ -17,11 +17,11 @@ export const Users: CollectionConfig = {
     create: anyone,
     delete: admins,
     read: adminsAndUser,
-    update: adminsAndUser,
+    update: adminsAndUser
   },
   admin: {
     defaultColumns: ['name', 'email', 'roles'],
-    useAsTitle: 'name',
+    useAsTitle: 'name'
   },
   auth: {
     forgotPassword: {
@@ -46,25 +46,25 @@ export const Users: CollectionConfig = {
             </body>
           </html>
         `
-      },
-    },
+      }
+    }
   },
   endpoints: [
     {
       handler: customerProxy,
       method: 'get',
-      path: '/:teamID/customer',
+      path: '/:teamID/customer'
     },
     {
       handler: customerProxy,
       method: 'patch',
-      path: '/:teamID/customer',
-    },
+      path: '/:teamID/customer'
+    }
   ],
   fields: [
     {
       name: 'name',
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'roles',
@@ -72,34 +72,34 @@ export const Users: CollectionConfig = {
       access: {
         /* create: admins, */
         read: admins,
-        update: admins,
+        update: admins
       },
       defaultValue: ['customer'],
       hasMany: true,
       hooks: {
-        beforeChange: [ensureFirstUserIsAdmin],
+        beforeChange: [ensureFirstUserIsAdmin]
       },
       options: [
         {
           label: 'admin',
-          value: 'admin',
+          value: 'admin'
         },
         {
           label: 'customer',
-          value: 'customer',
-        },
-      ],
+          value: 'customer'
+        }
+      ]
     },
     {
       name: 'orders',
       type: 'relationship',
       access: {
         /* create: admins, */
-        update: admins,
+        update: admins
       },
       hasMany: true,
       label: 'Orders',
-      relationTo: 'orders',
+      relationTo: 'orders'
     },
     {
       name: 'stripeCustomerID',
@@ -107,13 +107,13 @@ export const Users: CollectionConfig = {
       access: {
         /* create: admins, */
         read: admins,
-        update: admins,
+        update: admins
       },
       admin: {
         position: 'sidebar',
-        readOnly: true,
+        readOnly: true
       },
-      label: 'Stripe Customer',
+      label: 'Stripe Customer'
     },
     {
       name: 'cart',
@@ -129,13 +129,13 @@ export const Users: CollectionConfig = {
                 {
                   name: 'product',
                   type: 'relationship',
-                  relationTo: 'products',
+                  relationTo: 'products'
                 },
                 {
                   name: 'variant',
-                  type: 'text',
-                },
-              ],
+                  type: 'text'
+                }
+              ]
             },
             {
               type: 'row',
@@ -143,26 +143,26 @@ export const Users: CollectionConfig = {
                 {
                   name: 'stripeProductID',
                   type: 'text',
-                  label: 'Stripe Product ID',
+                  label: 'Stripe Product ID'
                 },
                 {
                   name: 'quantity',
                   type: 'number',
                   admin: {
-                    step: 1,
+                    step: 1
                   },
-                  min: 0,
-                },
-              ],
+                  min: 0
+                }
+              ]
             },
             {
               name: 'url',
-              type: 'text',
-            },
+              type: 'text'
+            }
           ],
           interfaceName: 'CartItems',
-          label: 'Items',
-        },
+          label: 'Items'
+        }
         // If you wanted to maintain a 'created on'
         // or 'last modified' date for the cart
         // you could do so here:
@@ -183,7 +183,7 @@ export const Users: CollectionConfig = {
         //   }
         // },
       ],
-      label: 'Cart',
+      label: 'Cart'
     },
     {
       name: 'skipSync',
@@ -191,13 +191,13 @@ export const Users: CollectionConfig = {
       admin: {
         hidden: true,
         position: 'sidebar',
-        readOnly: true,
+        readOnly: true
       },
-      label: 'Skip Sync',
-    },
+      label: 'Skip Sync'
+    }
   ],
   hooks: {
-    beforeChange: [createStripeCustomer],
+    beforeChange: [createStripeCustomer]
   },
-  timestamps: true,
+  timestamps: true
 }

@@ -7,7 +7,11 @@ import { checkRole } from '@/access/checkRole'
 /**
  * Access control for Orders based on the user's role and the query string
  */
-export const adminsOrOrderedByOrPaymentId: Access = ({ data, req, req: { user } }) => {
+export const adminsOrOrderedByOrPaymentId: Access = ({
+  data,
+  req,
+  req: { user }
+}) => {
   if (user && checkRole(['admin'], user)) {
     return true
   }
@@ -23,16 +27,16 @@ export const adminsOrOrderedByOrPaymentId: Access = ({ data, req, req: { user } 
   if (paymentIntentID && typeof paymentIntentID === 'string') {
     return {
       stripePaymentIntentID: {
-        equals: paymentIntentID,
-      },
+        equals: paymentIntentID
+      }
     } as Where
   }
 
   if (user?.id) {
     return {
       orderedBy: {
-        equals: user.id,
-      },
+        equals: user.id
+      }
     } as Where
   }
 

@@ -4,7 +4,9 @@ import type { Page, Product } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 
-export const generateMeta = async (args: { doc: Page | Product }): Promise<Metadata> => {
+export const generateMeta = async (args: {
+  doc: Page | Product
+}): Promise<Metadata> => {
   const { doc } = args || {}
 
   const ogImage =
@@ -18,19 +20,19 @@ export const generateMeta = async (args: { doc: Page | Product }): Promise<Metad
     openGraph: mergeOpenGraph({
       ...(doc?.meta?.description
         ? {
-            description: doc?.meta?.description,
+            description: doc?.meta?.description
           }
         : {}),
       images: ogImage
         ? [
             {
-              url: ogImage,
-            },
+              url: ogImage
+            }
           ]
         : undefined,
       title: doc?.meta?.title || 'Payload',
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/'
     }),
-    title: doc?.meta?.title || 'Payload',
+    title: doc?.meta?.title || 'Payload'
   }
 }

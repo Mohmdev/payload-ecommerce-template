@@ -7,7 +7,13 @@ import { Label } from '@/components/ui/label'
 import { User } from '@/payload-types'
 import { useAuth } from '@/providers/Auth'
 import { useRouter } from 'next/navigation'
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
@@ -28,7 +34,7 @@ export const AccountForm: React.FC = () => {
     handleSubmit,
     register,
     reset,
-    watch,
+    watch
   } = useForm<FormData>()
 
   const password = useRef({})
@@ -39,15 +45,18 @@ export const AccountForm: React.FC = () => {
   const onSubmit = useCallback(
     async (data: FormData) => {
       if (user) {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {
-          // Make sure to include cookies with fetch
-          body: JSON.stringify(data),
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'PATCH',
-        })
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`,
+          {
+            // Make sure to include cookies with fetch
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'PATCH'
+          }
+        )
 
         if (response.ok) {
           const json = await response.json()
@@ -59,22 +68,22 @@ export const AccountForm: React.FC = () => {
             name: json.doc.name,
             email: json.doc.email,
             password: '',
-            passwordConfirm: '',
+            passwordConfirm: ''
           })
         } else {
           setError('There was a problem updating your account.')
         }
       }
     },
-    [user, setUser, reset],
+    [user, setUser, reset]
   )
 
   useEffect(() => {
     if (user === null) {
       router.push(
         `/login?error=${encodeURIComponent(
-          'You must be logged in to view this page.',
-        )}&redirect=${encodeURIComponent('/account')}`,
+          'You must be logged in to view this page.'
+        )}&redirect=${encodeURIComponent('/account')}`
       )
     }
 
@@ -84,7 +93,7 @@ export const AccountForm: React.FC = () => {
         name: user.name,
         email: user.email,
         password: '',
-        passwordConfirm: '',
+        passwordConfirm: ''
       })
     }
   }, [user, router, reset, changePassword])
@@ -94,7 +103,7 @@ export const AccountForm: React.FC = () => {
       <Message className="" error={error} success={success} />
       {!changePassword ? (
         <Fragment>
-          <div className="prose dark:prose-invert mb-8">
+          <div className="prose mb-8 dark:prose-invert">
             <p className="">
               {'Change your account details below, or '}
               <Button
@@ -110,16 +119,26 @@ export const AccountForm: React.FC = () => {
           </div>
           <div className="mb-4">
             <Label htmlFor="email">Email Address</Label>
-            <Input id="email" {...register('email', { required: true })} required type="email" />
+            <Input
+              id="email"
+              {...register('email', { required: true })}
+              required
+              type="email"
+            />
           </div>
           <div className="mb-8">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" {...register('name', { required: true })} required type="text" />
+            <Input
+              id="name"
+              {...register('name', { required: true })}
+              required
+              type="text"
+            />
           </div>
         </Fragment>
       ) : (
         <Fragment>
-          <div className="prose dark:prose-invert mb-8">
+          <div className="prose mb-8 dark:prose-invert">
             <p>
               {'Change your password below, or '}
               <Button
@@ -149,7 +168,8 @@ export const AccountForm: React.FC = () => {
               id="passwordConfirm"
               {...register('passwordConfirm', {
                 required: true,
-                validate: (value) => value === password.current || 'The passwords do not match',
+                validate: (value) =>
+                  value === password.current || 'The passwords do not match'
               })}
               required
               type="password"
@@ -158,7 +178,11 @@ export const AccountForm: React.FC = () => {
         </Fragment>
       )}
       <Button disabled={isLoading} type="submit" variant="default">
-        {isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
+        {isLoading
+          ? 'Processing'
+          : changePassword
+            ? 'Change Password'
+            : 'Update Account'}
       </Button>
     </form>
   )

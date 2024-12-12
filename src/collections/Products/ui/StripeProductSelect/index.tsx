@@ -4,7 +4,7 @@ import { ComponentClient } from './index.client'
 export const StripeProductSelect: React.FC<TextFieldClientProps> = (props) => {
   const {
     field: { label, name },
-    path,
+    path
   } = props
 
   return <ComponentClient name={name} label={label} path={path} />

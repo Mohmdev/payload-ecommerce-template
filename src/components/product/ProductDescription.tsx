@@ -15,7 +15,8 @@ export function ProductDescription({ product }: { product: Product }) {
     highestAmount = 0,
     currency = 'usd'
 
-  const hasVariants = product.enableVariants && product.variants?.variants?.length
+  const hasVariants =
+    product.enableVariants && product.variants?.variants?.length
 
   if (hasVariants) {
     const variantsOrderedByPrice = product.variants?.variants?.sort((a, b) => {
@@ -26,8 +27,10 @@ export function ProductDescription({ product }: { product: Product }) {
 
     if (variantsOrderedByPrice) {
       lowestAmount = (variantsOrderedByPrice[0].info as InfoType)?.price?.amount
-      highestAmount = (variantsOrderedByPrice[variantsOrderedByPrice.length - 1].info as InfoType)
-        ?.price?.amount
+      highestAmount = (
+        variantsOrderedByPrice[variantsOrderedByPrice.length - 1]
+          .info as InfoType
+      )?.price?.amount
     }
   } else if (product.info) {
     const info = product.info as InfoType
@@ -56,11 +59,18 @@ export function ProductDescription({ product }: { product: Product }) {
       </Suspense>
 
       {product.description ? (
-        <RichText className="mb-6" content={product.description} enableGutter={false} />
+        <RichText
+          className="mb-6"
+          content={product.description}
+          enableGutter={false}
+        />
       ) : null}
 
       <Suspense fallback={null}>
-        <AddToCart product={product} variants={product.variants?.variants || []} />
+        <AddToCart
+          product={product}
+          variants={product.variants?.variants || []}
+        />
       </Suspense>
     </React.Fragment>
   )

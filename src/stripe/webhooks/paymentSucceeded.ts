@@ -19,10 +19,12 @@ export const paymentSucceeded: StripeWebhookHandler<{
     amount,
     currency,
     customer,
-    metadata: metadataFromObject,
+    metadata: metadataFromObject
   } = event.data.object
 
-  const cart = metadataFromObject.cart ? JSON.parse(metadataFromObject.cart) : undefined
+  const cart = metadataFromObject.cart
+    ? JSON.parse(metadataFromObject.cart)
+    : undefined
 
   let user: User | undefined
 
@@ -33,9 +35,9 @@ export const paymentSucceeded: StripeWebhookHandler<{
       limit: 1,
       where: {
         stripeCustomerID: {
-          equals: typeof customer === 'string' ? customer : customer.id,
-        },
-      },
+          equals: typeof customer === 'string' ? customer : customer.id
+        }
+      }
     })
 
     if (users?.docs.length > 0) {
@@ -44,7 +46,9 @@ export const paymentSucceeded: StripeWebhookHandler<{
   }
 
   if (logs)
-    payload.logger.info(`Syncing Stripe product with ID: ${stripePaymentIntentID} to Payload...`)
+    payload.logger.info(
+      `Syncing Stripe product with ID: ${stripePaymentIntentID} to Payload...`
+    )
 
   try {
     if (logs) payload.logger.info(`- Creating order...`)
@@ -60,12 +64,12 @@ export const paymentSucceeded: StripeWebhookHandler<{
           return {
             product: productID,
             quantity,
-            variant,
+            variant
           }
         }),
         stripePaymentIntentID,
-        total: amount,
-      },
+        total: amount
+      }
     })
 
     if (logs) payload.logger.info(`✅ Successfully created order for payment.`)

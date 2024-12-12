@@ -11,7 +11,7 @@ async function getGlobal(slug: Global, depth = 0) {
 
   const global = await payload.findGlobal({
     slug,
-    depth,
+    depth
   })
 
   return global
@@ -22,5 +22,5 @@ async function getGlobal(slug: Global, depth = 0) {
  */
 export const getCachedGlobal = (slug: Global, depth = 0) =>
   unstable_cache(async () => getGlobal(slug, depth), [slug], {
-    tags: [`global_${slug}`],
+    tags: [`global_${slug}`]
   })

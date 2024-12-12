@@ -26,7 +26,9 @@ export const PayloadRedirects: React.FC<Props> = async ({ url }) => {
       const collection = redirectItem.to?.reference?.relationTo
       const id = redirectItem.to?.reference?.value
 
-      const document = (await getCachedDocument(collection, id)()) as Page | Product
+      const document = (await getCachedDocument(collection, id)()) as
+        | Page
+        | Product
       redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
         document?.slug
       }`

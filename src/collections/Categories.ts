@@ -3,21 +3,21 @@ import type { CollectionConfig } from 'payload'
 export const Categories: CollectionConfig = {
   slug: 'categories',
   access: {
-    read: () => true,
+    read: () => true
   },
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'title'
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      required: true,
+      required: true
     },
     {
       name: 'slug',
       type: 'text',
-      required: true,
-    },
-  ],
+      required: true
+    }
+  ]
 }

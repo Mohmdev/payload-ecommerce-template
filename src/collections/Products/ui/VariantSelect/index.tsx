@@ -4,7 +4,12 @@ import type { TextFieldClientProps } from 'payload'
 
 import { toKebabCase } from '@/utilities/toKebabCase'
 import { getTranslation } from '@payloadcms/translations'
-import { useField, useForm, useFormFields, useTranslation } from '@payloadcms/ui'
+import {
+  useField,
+  useForm,
+  useFormFields,
+  useTranslation
+} from '@payloadcms/ui'
 import React, { useCallback } from 'react'
 import { sortOptionsByKey } from '@/collections/Products/utilities/sortOptionsByKey'
 
@@ -15,7 +20,7 @@ import classes from './index.module.scss'
 export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
   const {
     field: { label },
-    path,
+    path
   } = props
 
   const { setValue, value } = useField<string[]>({ path })
@@ -25,10 +30,12 @@ export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
 
   const keys: any = getDataByPath('variants.options')
 
-  const { dispatchFields, infoField } = useFormFields(([fields, dispatchFields]) => ({
-    dispatchFields,
-    infoField: fields[variantInfoPath],
-  }))
+  const { dispatchFields, infoField } = useFormFields(
+    ([fields, dispatchFields]) => ({
+      dispatchFields,
+      infoField: fields[variantInfoPath]
+    })
+  )
 
   const variantInfo = infoField.value
 
@@ -46,9 +53,9 @@ export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
                 slug: option.slug,
                 key: {
                   slug: group.slug,
-                  label: group.label,
+                  label: group.label
                 },
-                label: option.label,
+                label: option.label
               })
             }
           })
@@ -59,23 +66,25 @@ export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
 
       const newVariantInfo: Partial<InfoType> = {
         ...existingVariantInfo,
-        options,
+        options
       }
 
       dispatchFields({
         type: 'UPDATE',
         path: variantInfoPath,
-        value: newVariantInfo,
+        value: newVariantInfo
       })
 
       setValue(newValue)
     },
-    [variantInfo, dispatchFields, variantInfoPath, setValue, keys],
+    [variantInfo, dispatchFields, variantInfoPath, setValue, keys]
   )
 
   return (
     <div className={classes.container}>
-      <p style={{ marginBottom: '0' }}>{typeof label === 'string' ? label : 'Product'}</p>
+      <p style={{ marginBottom: '0' }}>
+        {typeof label === 'string' ? label : 'Product'}
+      </p>
       <div className={classes.groupsContainer}>
         {keys.length &&
           keys.map((key) => {
@@ -109,7 +118,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   options,
   path,
   setValue,
-  value,
+  value
 }) => {
   const { i18n } = useTranslation()
 
@@ -128,7 +137,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
 
       setValue(sortedValues)
     },
-    [options, value, setValue, fullArray],
+    [options, value, setValue, fullArray]
   )
 
   return (
@@ -140,7 +149,9 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
         return (
           <div className={classes.fieldItem} key={id}>
             <input
-              defaultChecked={value && Array.isArray(value) && value?.includes(item.slug)}
+              defaultChecked={
+                value && Array.isArray(value) && value?.includes(item.slug)
+              }
               id={id}
               name={name}
               onChange={handleOnChange}

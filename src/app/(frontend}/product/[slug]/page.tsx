@@ -51,14 +51,19 @@ import React, { Suspense } from 'react'
   }
 } */
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+export default async function ProductPage({
+  params
+}: {
+  params: { slug: string }
+}) {
   const product = await queryProductBySlug({ slug: params.slug })
 
   if (!product) return notFound()
 
   const variants = product.enableVariants ? product.variants?.variants : []
 
-  const metaImage = typeof product.meta?.image !== 'string' ? product.meta?.image : undefined
+  const metaImage =
+    typeof product.meta?.image !== 'string' ? product.meta?.image : undefined
   const hasStock = product.enableVariants
     ? variants?.some((variant) => variant?.stock > 0)
     : product.stock! > 0
@@ -71,14 +76,18 @@ export default async function ProductPage({ params }: { params: { slug: string }
     image: metaImage?.url,
     offers: {
       '@type': 'AggregateOffer',
-      availability: hasStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      availability: hasStock
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
       price: product.price,
-      priceCurrency: product.currency,
-    },
+      priceCurrency: product.currency
+    }
   }
 
   const relatedProducts =
-    product.relatedProducts?.filter((relatedProduct) => typeof relatedProduct !== 'string') ?? []
+    product.relatedProducts?.filter(
+      (relatedProduct) => typeof relatedProduct !== 'string'
+    ) ?? []
 
   const gallery = product.gallery
     ?.filter((image) => Boolean(image.image && typeof image.image !== 'string'))
@@ -102,7 +111,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     <React.Fragment>
       <script
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
+          __html: JSON.stringify(productJsonLd)
         }}
         type="application/ld+json"
       />
@@ -147,12 +156,15 @@ function RelatedProducts({ products }: { products: Product[] }) {
             className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
             key={product.id}
           >
-            <Link className="relative h-full w-full" href={`/product/${product.slug}`}>
+            <Link
+              className="relative h-full w-full"
+              href={`/product/${product.slug}`}
+            >
               <GridTileImage
                 label={{
                   amount: product.price!,
                   currencyCode: product.currency!,
-                  title: product.title,
+                  title: product.title
                 }}
                 media={product.meta?.image as Media}
               />
@@ -168,7 +180,9 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = draftMode()
 
   const payload = await getPayloadHMR({ config: configPromise })
-  const authResult = draft ? await payload.auth({ headers: headers() }) : undefined
+  const authResult = draft
+    ? await payload.auth({ headers: headers() })
+    : undefined
 
   const user = authResult?.user
 
@@ -181,9 +195,9 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
     user,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   })
 
   return result.docs?.[0] || null

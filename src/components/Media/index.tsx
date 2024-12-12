@@ -8,14 +8,15 @@ import { VideoMedia } from './VideoMedia'
 export const Media: React.FC<MediaProps> = (props) => {
   const { className, htmlElement = 'div', resource } = props
 
-  const isVideo = typeof resource !== 'string' && resource?.mimeType?.includes('video')
+  const isVideo =
+    typeof resource !== 'string' && resource?.mimeType?.includes('video')
   const Tag = (htmlElement as any) || Fragment
 
   return (
     <Tag
       {...(htmlElement !== null
         ? {
-            className,
+            className
           }
         : {})}
     >

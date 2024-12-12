@@ -7,7 +7,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from '@/components/ui/sheet'
 import { useAuth } from '@/providers/Auth'
 import { UserIcon } from 'lucide-react'
@@ -26,7 +26,7 @@ export default function AccountDrawer() {
 
   return (
     <Sheet onOpenChange={setIsOpen} open={isOpen}>
-      <SheetTrigger className="relative hidden md:flex  h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:bg-black dark:text-white">
+      <SheetTrigger className="relative hidden h-11  w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:flex dark:border-neutral-700 dark:bg-black dark:text-white">
         <UserIcon className="h-4 transition-all ease-in-out hover:scale-110" />
       </SheetTrigger>
 
@@ -35,8 +35,8 @@ export default function AccountDrawer() {
           <SheetTitle>My account</SheetTitle>
 
           <SheetDescription>
-            You are currently shopping as a guest. Log in or create an account for an easier
-            checkout process.
+            You are currently shopping as a guest. Log in or create an account
+            for an easier checkout process.
           </SheetDescription>
         </SheetHeader>
         <hr className="my-5" />
@@ -57,7 +57,7 @@ export default function AccountDrawer() {
             </ul>
           </div>
         ) : (
-          <div className="flex flex-col flex-grow justify-between gap-2">
+          <div className="flex flex-grow flex-col justify-between gap-2">
             <nav aria-label="My account navigation">
               <Link href="/order-lookup">Order Look-up</Link>
             </nav>
@@ -67,7 +67,11 @@ export default function AccountDrawer() {
             <div className="flex flex-col gap-2">
               <Button asChild className="w-full" variant="default">
                 <Link
-                  href={pathname.includes('product') ? `/login?redirect=${pathname}` : '/login'}
+                  href={
+                    pathname.includes('product')
+                      ? `/login?redirect=${pathname}`
+                      : '/login'
+                  }
                 >
                   Log in
                 </Link>

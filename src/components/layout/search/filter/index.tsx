@@ -17,7 +17,13 @@ function FilterItemList({ list }: { list: ListItem[] }) {
   )
 }
 
-export function FilterList({ list, title }: { list: ListItem[]; title?: string }) {
+export function FilterList({
+  list,
+  title
+}: {
+  list: ListItem[]
+  title?: string
+}) {
   return (
     <React.Fragment>
       <nav>

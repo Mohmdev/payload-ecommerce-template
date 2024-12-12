@@ -9,18 +9,21 @@ import { LoginForm } from './LoginForm'
 
 export default async function Login() {
   await getMeUser({
-    validUserRedirect: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+    validUserRedirect: `/account?warning=${encodeURIComponent('You are already logged in.')}`
   })
 
   return (
     <div className="container">
-      <div className="max-w-xl mx-auto my-12">
+      <div className="mx-auto my-12 max-w-xl">
         <RenderParams />
 
         <h1 className="mb-4 text-[1.8rem]">Log in</h1>
         <p className="mb-8">
           {`This is where your customers will login to manage their account, review their order history, and more. To manage all users, `}
-          <Link href="/admin/collections/users">login to the admin dashboard</Link>.
+          <Link href="/admin/collections/users">
+            login to the admin dashboard
+          </Link>
+          .
         </p>
         <LoginForm />
       </div>
@@ -32,7 +35,7 @@ export const metadata: Metadata = {
   description: 'Login or create an account to get started.',
   openGraph: {
     title: 'Login',
-    url: '/login',
+    url: '/login'
   },
-  title: 'Login',
+  title: 'Login'
 }

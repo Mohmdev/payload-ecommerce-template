@@ -19,7 +19,7 @@ export const RecoverPasswordForm: React.FC = () => {
   const {
     formState: { errors },
     handleSubmit,
-    register,
+    register
   } = useForm<FormData>()
 
   const onSubmit = useCallback(async (data: FormData) => {
@@ -28,10 +28,10 @@ export const RecoverPasswordForm: React.FC = () => {
       {
         body: JSON.stringify(data),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        method: 'POST',
-      },
+        method: 'POST'
+      }
     )
 
     if (response.ok) {
@@ -39,7 +39,7 @@ export const RecoverPasswordForm: React.FC = () => {
       setError('')
     } else {
       setError(
-        'There was a problem while attempting to send you a password reset email. Please try again.',
+        'There was a problem while attempting to send you a password reset email. Please try again.'
       )
     }
   }, [])
@@ -48,19 +48,27 @@ export const RecoverPasswordForm: React.FC = () => {
     <Fragment>
       {!success && (
         <React.Fragment>
-          <h1 className="text-xl mb-4">Recover Password</h1>
-          <div className="prose dark:prose-invert mb-8">
+          <h1 className="mb-4 text-xl">Recover Password</h1>
+          <div className="prose mb-8 dark:prose-invert">
             <p>
               {`Please enter your email below. You will receive an email message with instructions on
               how to reset your password. To manage your all users, `}
-              <Link href="/admin/collections/users">login to the admin dashboard</Link>.
+              <Link href="/admin/collections/users">
+                login to the admin dashboard
+              </Link>
+              .
             </p>
           </div>
           <form className="max-w-lg" onSubmit={handleSubmit(onSubmit)}>
             <Message className="mb-8" error={error} />
             <div className="mb-8">
               <Label htmlFor="email">Email address</Label>
-              <Input id="email" {...register('email', { required: true })} required type="email" />
+              <Input
+                id="email"
+                {...register('email', { required: true })}
+                required
+                type="email"
+              />
             </div>
             <Button type="submit" variant="default">
               Recover Password
@@ -70,9 +78,12 @@ export const RecoverPasswordForm: React.FC = () => {
       )}
       {success && (
         <React.Fragment>
-          <h1 className="text-xl mb-4">Request submitted</h1>
+          <h1 className="mb-4 text-xl">Request submitted</h1>
           <div className="prose dark:prose-invert">
-            <p>Check your email for a link that will allow you to securely reset your password.</p>
+            <p>
+              Check your email for a link that will allow you to securely reset
+              your password.
+            </p>
           </div>
         </React.Fragment>
       )}

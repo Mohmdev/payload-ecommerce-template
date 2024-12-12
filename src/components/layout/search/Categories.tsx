@@ -11,12 +11,12 @@ async function CategoryList() {
   const categories = (
     await payload.find({
       collection: 'categories',
-      sort: 'title',
+      sort: 'title'
     })
   ).docs?.map((category) => {
     return {
       path: `/search/${category.slug}`,
-      title: category.title,
+      title: category.title
     }
   })
 

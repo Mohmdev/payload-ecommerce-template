@@ -5,7 +5,7 @@ import Stripe from 'stripe'
 import { checkRole } from '@/access/checkRole'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-08-01'
 })
 
 const logs = process.env.LOGS_STRIPE_PROXY === '1'
@@ -15,20 +15,32 @@ const logs = process.env.LOGS_STRIPE_PROXY === '1'
 // GET /api/customers
 export const customersProxy: PayloadHandler = async (req: PayloadRequest) => {
   if (!req.user || !checkRole(['admin'], req.user)) {
-    if (logs) req.payload.logger.error({ err: `You are not authorized to access customers` })
+    if (logs)
+      req.payload.logger.error({
+        err: `You are not authorized to access customers`
+      })
 
-    return Response.json({ error: 'You are not authorized to access customers' }, { status: 401 })
+    return Response.json(
+      { error: 'You are not authorized to access customers' },
+      { status: 401 }
+    )
   }
 
   try {
     const customers = await stripe.customers.list({
-      limit: 100,
+      limit: 100
     })
 
     return Response.json(customers, { status: 200 })
   } catch (error: unknown) {
-    if (logs) req.payload.logger.error({ err: `Error using Stripe API: ${String(error)}` })
+    if (logs)
+      req.payload.logger.error({
+        err: `Error using Stripe API: ${String(error)}`
+      })
 
-    return Response.json({ error: `Error using Stripe API: ${String(error)}` }, { status: 500 })
+    return Response.json(
+      { error: `Error using Stripe API: ${String(error)}` },
+      { status: 500 }
+    )
   }
 }

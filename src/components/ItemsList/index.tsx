@@ -14,7 +14,8 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
   return (
     <ul className="flex-grow overflow-auto py-4">
       {items?.map((item, i) => {
-        if (typeof item.product === 'string' || !item) return <React.Fragment key={item.id} />
+        if (typeof item.product === 'string' || !item)
+          return <React.Fragment key={item.id} />
 
         const product = item.product
         let image =
@@ -27,10 +28,15 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
           ? item.product.variants.variants.find((v) => v.id === item.variant)
           : undefined
 
-        const info = isVariant ? (variant?.info as InfoType) : (product?.info as InfoType)
+        const info = isVariant
+          ? (variant?.info as InfoType)
+          : (product?.info as InfoType)
 
         if (isVariant) {
-          if (variant?.images?.[0]?.image && typeof variant?.images?.[0]?.image !== 'string') {
+          if (
+            variant?.images?.[0]?.image &&
+            typeof variant?.images?.[0]?.image !== 'string'
+          ) {
             image = variant.images[0].image
           }
         }

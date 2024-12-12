@@ -1,5 +1,10 @@
 'use client'
-import type { OptionObject, StaticLabel, TextField, TextFieldClientProps } from 'payload'
+import type {
+  OptionObject,
+  StaticLabel,
+  TextField,
+  TextFieldClientProps
+} from 'payload'
 import type Stripe from 'stripe'
 
 import { useField, useFormFields, withCondition } from '@payloadcms/ui'
@@ -33,12 +38,14 @@ export const Component: React.FC<Props> = (props) => {
   const infoPath = path.includes('.') ? currentPath + '.info' : 'info'
   const [options, setOptions] = React.useState<ProductOption[]>([])
 
-  const { dispatchFields, infoField } = useFormFields(([fields, dispatchFields]) => {
-    return {
-      dispatchFields,
-      infoField: fields[infoPath],
+  const { dispatchFields, infoField } = useFormFields(
+    ([fields, dispatchFields]) => {
+      return {
+        dispatchFields,
+        infoField: fields[infoPath]
+      }
     }
-  })
+  )
 
   const info = infoField?.value
 
@@ -47,8 +54,8 @@ export const Component: React.FC<Props> = (props) => {
       const productsFetch = await fetch('/api/stripe/products', {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       })
 
       const res = await productsFetch.json()
@@ -62,18 +69,18 @@ export const Component: React.FC<Props> = (props) => {
                 label: item.name || item.id,
                 price: {
                   amount: item.default_price?.unit_amount || 0,
-                  currency: item.default_price?.currency || 'USD',
+                  currency: item.default_price?.currency || 'USD'
                 },
-                value: item.id,
+                value: item.id
               })
             return acc
           },
           [
             {
               label: 'Select a product',
-              value: '',
-            },
-          ] as ProductOption[],
+              value: ''
+            }
+          ] as ProductOption[]
         )
         setOptions(fetchedProducts)
       }
@@ -88,19 +95,22 @@ export const Component: React.FC<Props> = (props) => {
 
       const newInfo: Partial<InfoType> = {
         ...existingInfo,
-        price: options.find((option) => option.value === newValue.value)?.price || undefined,
-        productName: options.find((option) => option.value === newValue.value)?.label || '',
+        price:
+          options.find((option) => option.value === newValue.value)?.price ||
+          undefined,
+        productName:
+          options.find((option) => option.value === newValue.value)?.label || ''
       }
 
       dispatchFields({
         type: 'UPDATE',
         path: infoPath,
-        value: newInfo,
+        value: newInfo
       })
 
       setValue(newValue.value)
     },
-    [setValue, dispatchFields, options, info, infoPath],
+    [setValue, dispatchFields, options, info, infoPath]
   )
 
   const href = `https://dashboard.stripe.com/${
@@ -109,11 +119,13 @@ export const Component: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <p style={{ marginBottom: '0' }}>{typeof label === 'string' ? label : 'Product'}</p>
+      <p style={{ marginBottom: '0' }}>
+        {typeof label === 'string' ? label : 'Product'}
+      </p>
       <p
         style={{
           color: 'var(--theme-elevation-400)',
-          marginBottom: '0.75rem',
+          marginBottom: '0.75rem'
         }}
       >
         {`Select the related Stripe product or `}
@@ -140,18 +152,19 @@ export const Component: React.FC<Props> = (props) => {
       {Boolean(stripeProductID) && (
         <div
           style={{
-            marginBottom: '1.5rem',
+            marginBottom: '1.5rem'
           }}
         >
           <div>
             <span
               className="label"
               style={{
-                color: '#9A9A9A',
+                color: '#9A9A9A'
               }}
             >
               {`Manage "${
-                options.find((option) => option.value === stripeProductID)?.label || 'Unknown'
+                options.find((option) => option.value === stripeProductID)
+                  ?.label || 'Unknown'
               }" in Stripe`}
             </span>
             <CopyToClipboard value={href} />
@@ -160,7 +173,7 @@ export const Component: React.FC<Props> = (props) => {
             style={{
               fontWeight: '600',
               overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              textOverflow: 'ellipsis'
             }}
           >
             <a

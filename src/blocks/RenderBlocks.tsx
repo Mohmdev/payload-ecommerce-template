@@ -17,7 +17,7 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  threeItemGrid: ThreeItemGridBlock,
+  threeItemGrid: ThreeItemGridBlock
 }
 
 export const RenderBlocks: React.FC<{

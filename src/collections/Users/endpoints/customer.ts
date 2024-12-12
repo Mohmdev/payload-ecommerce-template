@@ -4,7 +4,7 @@ import type { PayloadRequest } from 'payload'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-08-01'
 })
 
 const logs = process.env.LOGS_STRIPE_PROXY === '1'
@@ -20,11 +20,14 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest) => {
   const userID: string = req?.routeParams?.userID as string
 
   if (!req.user) {
-    if (logs) req.payload.logger.error({ err: `You are not authorized to access this customer` })
+    if (logs)
+      req.payload.logger.error({
+        err: `You are not authorized to access this customer`
+      })
 
     return Response.json(
       { error: 'You are not authorized to access this customer' },
-      { status: 401 },
+      { status: 401 }
     )
   }
 
@@ -49,13 +52,13 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest) => {
       // look up the customer to ensure that it belongs to the user
       // this will ensure that this user is allows perform operations on it
       customer = await stripe.customers.retrieve(req.user.stripeCustomerID, {
-        expand: ['invoice_settings.default_payment_method'],
+        expand: ['invoice_settings.default_payment_method']
       })
 
       if (customer.deleted) {
         return Response.json(
           { error: `Customer ${req.user.stripeCustomerID} not found` },
-          { status: 404 },
+          { status: 404 }
         )
       }
 
@@ -63,7 +66,7 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest) => {
       if (customer.id !== req.user.stripeCustomerID) {
         return Response.json(
           { error: `You are not authorized to access this customer` },
-          { status: 401 },
+          { status: 401 }
         )
       }
     }
@@ -78,12 +81,18 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest) => {
       if (!req.body) throw new Error('No customer data provided')
       // TODO: lock down the spread `customer` object to only allow certain fields
       // @ts-expect-error
-      response = await stripe.customers.update(req.user.stripeCustomerID, req.body)
+      response = await stripe.customers.update(
+        req.user.stripeCustomerID,
+        req.body
+      )
     }
 
     return Response.json(response, { status: 200 })
   } catch (error: unknown) {
-    if (logs) req.payload.logger.error({ err: `Error using Stripe API: ${String(error)}` })
+    if (logs)
+      req.payload.logger.error({
+        err: `Error using Stripe API: ${String(error)}`
+      })
 
     return Response.json({ error: `Error using Stripe API.` }, { status: 500 })
   }

@@ -19,8 +19,8 @@ export function DeleteItemButton({ item }: { item: CartItem }) {
         className={clsx(
           'ease flex h-[17px] w-[17px] items-center justify-center rounded-full bg-neutral-500 transition-all duration-200',
           {
-            'cursor-not-allowed px-0': !itemId,
-          },
+            'cursor-not-allowed px-0': !itemId
+          }
         )}
         disabled={!itemId}
         onClick={(e: React.FormEvent<HTMLButtonElement>) => {

@@ -14,7 +14,7 @@ import React, { Fragment } from 'react'
 
 export default async function Order({
   params: { id },
-  searchParams,
+  searchParams
 }: {
   params: { id: string }
   searchParams: { paymentId?: string }
@@ -32,12 +32,12 @@ export default async function Order({
         headers: {
           ...(token
             ? {
-                Authorization: `JWT ${token}`,
+                Authorization: `JWT ${token}`
               }
             : {}),
-          'Content-Type': 'application/json',
-        },
-      },
+          'Content-Type': 'application/json'
+        }
+      }
     )?.then(async (res) => {
       if (!res.ok) notFound()
       const json = await res.json()
@@ -73,13 +73,15 @@ export default async function Order({
       </div>
       <div className="">
         <p>
-          <time dateTime={order.createdAt}>{formatDateTime(order.createdAt)}</time>
+          <time dateTime={order.createdAt}>
+            {formatDateTime(order.createdAt)}
+          </time>
         </p>
         <p className="">
           {'Total: '}
           {new Intl.NumberFormat('en-US', {
             currency: 'usd',
-            style: 'currency',
+            style: 'currency'
           }).format(order.total / 100)}
         </p>
       </div>
@@ -101,8 +103,8 @@ export async function generateMetadata({ params: { id } }): Promise<Metadata> {
     description: `Order details for order ${id}.`,
     openGraph: mergeOpenGraph({
       title: `Order ${id}`,
-      url: `/orders/${id}`,
+      url: `/orders/${id}`
     }),
-    title: `Order ${id}`,
+    title: `Order ${id}`
   }
 }

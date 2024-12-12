@@ -26,7 +26,7 @@ export const LoginForm: React.FC = () => {
   const {
     formState: { errors, isLoading },
     handleSubmit,
-    register,
+    register
   } = useForm<FormData>()
 
   const onSubmit = useCallback(
@@ -36,10 +36,12 @@ export const LoginForm: React.FC = () => {
         if (redirect?.current) router.push(redirect.current)
         else router.push('/account')
       } catch (_) {
-        setError('There was an error with the credentials provided. Please try again.')
+        setError(
+          'There was an error with the credentials provided. Please try again.'
+        )
       }
     },
-    [login, router],
+    [login, router]
   )
 
   return (
@@ -48,24 +50,37 @@ export const LoginForm: React.FC = () => {
 
       <div className="mb-6 flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" {...register('email', { required: true })} />
+        <Input
+          id="email"
+          type="email"
+          {...register('email', { required: true })}
+        />
       </div>
 
       <div className="mb-6 flex flex-col gap-2">
         <Label htmlFor="password">Password</Label>
-        <Input id="password" type="password" {...register('password', { required: true })} />
+        <Input
+          id="password"
+          type="password"
+          {...register('password', { required: true })}
+        />
       </div>
 
-      <div className="text-primary/70 mb-6 prose hover:prose-a:text-primary dark:prose-invert">
+      <div className="prose mb-6 text-primary/70 dark:prose-invert hover:prose-a:text-primary">
         <p>
           Forgot your password?{' '}
-          <Link href={`/recover-password${allParams}`}>Click here to reset it</Link>
+          <Link href={`/recover-password${allParams}`}>
+            Click here to reset it
+          </Link>
         </p>
       </div>
 
-      <div className="flex gap-4 justify-between">
+      <div className="flex justify-between gap-4">
         <Button asChild variant="outline" size="lg">
-          <Link href={`/create-account${allParams}`} className="flex-grow max-w-[50%]">
+          <Link
+            href={`/create-account${allParams}`}
+            className="max-w-[50%] flex-grow"
+          >
             Create an account
           </Link>
         </Button>

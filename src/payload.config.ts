@@ -14,7 +14,7 @@ import {
   ItalicFeature,
   LinkFeature,
   UnderlineFeature,
-  lexicalEditor,
+  lexicalEditor
 } from '@payloadcms/richtext-lexical'
 import { DocumentInfoContext } from '@payloadcms/ui'
 import dotenv from 'dotenv'
@@ -60,13 +60,13 @@ export default buildConfig({
       beforeLogin: ['@/components/BeforeLogin#BeforeLogin'],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard'],
+      beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard']
     },
-    user: Users.slug,
+    user: Users.slug
   },
   collections: [Users, Products, Pages, Categories, Media, Orders],
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+    url: process.env.DATABASE_URI || ''
   }),
   editor: lexicalEditor({
     features: () => {
@@ -88,29 +88,29 @@ export default buildConfig({
                 name: 'url',
                 type: 'text',
                 admin: {
-                  condition: ({ linkType }) => linkType !== 'internal',
+                  condition: ({ linkType }) => linkType !== 'internal'
                 },
                 label: ({ t }) => t('fields:enterURL'),
-                required: true,
-              },
+                required: true
+              }
             ]
-          },
-        }),
+          }
+        })
       ]
-    },
+    }
   }),
   email: nodemailerAdapter(),
   endpoints: [
     {
       handler: productsProxy,
       method: 'get',
-      path: '/stripe/products',
+      path: '/stripe/products'
     },
     {
       handler: createPaymentIntent,
       method: 'post',
-      path: '/create-payment-intent',
-    },
+      path: '/create-payment-intent'
+    }
     /*
     {
       handler: customersProxy,
@@ -135,15 +135,15 @@ export default buildConfig({
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_SIGNING_SECRET,
       webhooks: {
         'payment_intent.succeeded': paymentSucceeded,
-        'product.updated': productUpdated,
-      },
+        'product.updated': productUpdated
+      }
     }),
     redirectsPlugin({
-      collections: ['pages', 'products'],
+      collections: ['pages', 'products']
     }),
     formBuilderPlugin({
       fields: {
-        payment: false,
+        payment: false
       },
       formOverrides: {
         fields: ({ defaultFields }) => {
@@ -151,25 +151,25 @@ export default buildConfig({
             if ('name' in field && field.name === 'confirmationMessage') {
               return {
                 ...field,
-                editor: lexicalEditor(),
+                editor: lexicalEditor()
               }
             }
             return field
           })
-        },
-      },
+        }
+      }
     }),
     seoPlugin({
       collections: ['pages', 'products'],
       generateTitle,
-      uploadsCollection: 'media',
+      uploadsCollection: 'media'
     }),
-    payloadCloudPlugin(),
+    payloadCloudPlugin()
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
+    outputFile: path.resolve(dirname, 'payload-types.ts')
+  }
   // Sharp is now an optional dependency -
   // if you want to resize images, crop, set focal point, etc.
   // make sure to install it and pass it to the config.

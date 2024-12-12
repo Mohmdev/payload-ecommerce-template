@@ -7,7 +7,7 @@ import { CheckoutPage } from './CheckoutPage'
 
 export default function Checkout() {
   return (
-    <div className="container min-h-[60vh] my-16">
+    <div className="container my-16 min-h-[60vh]">
       {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && (
         <div>
           <Fragment>
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   description: 'Checkout.',
   openGraph: mergeOpenGraph({
     title: 'Checkout',
-    url: '/checkout',
+    url: '/checkout'
   }),
-  title: 'Checkout',
+  title: 'Checkout'
 }

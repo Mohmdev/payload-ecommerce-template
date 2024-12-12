@@ -25,7 +25,7 @@ export const ResetPasswordForm: React.FC = () => {
     formState: { errors },
     handleSubmit,
     register,
-    reset,
+    reset
   } = useForm<FormData>()
 
   const onSubmit = useCallback(
@@ -35,10 +35,10 @@ export const ResetPasswordForm: React.FC = () => {
         {
           body: JSON.stringify(data),
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          method: 'POST',
-        },
+          method: 'POST'
+        }
       )
 
       if (response.ok) {
@@ -50,10 +50,12 @@ export const ResetPasswordForm: React.FC = () => {
         // Redirect them to `/account` with success message in URL
         router.push('/account?success=Password reset successfully.')
       } else {
-        setError('There was a problem while resetting your password. Please try again later.')
+        setError(
+          'There was a problem while resetting your password. Please try again later.'
+        )
       }
     },
-    [router, login],
+    [router, login]
   )
 
   // when Next.js populates token within router,

@@ -6,12 +6,12 @@ import React from 'react'
 
 export const metadata = {
   description: 'Search for products in the store.',
-  title: 'Search',
+  title: 'Search'
 }
 
 export default async function SearchCategoryPage({
   params,
-  searchParams,
+  searchParams
 }: {
   params: { category: string }
   searchParams?: { [key: string]: string | string[] | undefined }
@@ -25,8 +25,8 @@ export default async function SearchCategoryPage({
     await payload.find({
       collection: 'categories',
       where: {
-        slug: { equals: category },
-      },
+        slug: { equals: category }
+      }
     })
   ).docs?.[0]
 
@@ -40,18 +40,18 @@ export default async function SearchCategoryPage({
           or: [
             {
               title: {
-                like: searchValue,
-              },
+                like: searchValue
+              }
             },
             {
               description: {
-                like: searchValue,
-              },
-            },
-          ],
-        },
-      ],
-    },
+                like: searchValue
+              }
+            }
+          ]
+        }
+      ]
+    }
   })
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
 

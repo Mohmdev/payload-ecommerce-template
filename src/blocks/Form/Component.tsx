@@ -38,12 +38,18 @@ export const FormBlock: React.FC<
   const {
     enableIntro,
     form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
-    introContent,
+    form: {
+      id: formID,
+      confirmationMessage,
+      confirmationType,
+      redirect,
+      submitButtonLabel
+    } = {},
+    introContent
   } = props
 
   const formMethods = useForm({
-    defaultValues: buildInitialFormState(formFromProps.fields),
+    defaultValues: buildInitialFormState(formFromProps.fields)
   })
   const {
     control,
@@ -51,12 +57,14 @@ export const FormBlock: React.FC<
     getValues,
     handleSubmit,
     register,
-    setValue,
+    setValue
   } = formMethods
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
-  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
+  const [error, setError] = useState<
+    { message: string; status?: string } | undefined
+  >()
   const router = useRouter()
 
   const onSubmit = useCallback(
@@ -67,7 +75,7 @@ export const FormBlock: React.FC<
 
         const dataToSend = Object.entries(data).map(([name, value]) => ({
           field: name,
-          value,
+          value
         }))
 
         // delay loading indicator by 1s
@@ -76,16 +84,19 @@ export const FormBlock: React.FC<
         }, 1000)
 
         try {
-          const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/form-submissions`, {
-            body: JSON.stringify({
-              form: formID,
-              submissionData: dataToSend,
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-          })
+          const req = await fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/form-submissions`,
+            {
+              body: JSON.stringify({
+                form: formID,
+                submissionData: dataToSend
+              }),
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              method: 'POST'
+            }
+          )
 
           const res = await req.json()
 
@@ -96,7 +107,7 @@ export const FormBlock: React.FC<
 
             setError({
               message: res.errors?.[0]?.message || 'Internal Server Error',
-              status: res.status,
+              status: res.status
             })
 
             return
@@ -116,23 +127,30 @@ export const FormBlock: React.FC<
           console.warn(err)
           setIsLoading(false)
           setError({
-            message: 'Something went wrong.',
+            message: 'Something went wrong.'
           })
         }
       }
 
       void submitForm()
     },
-    [router, formID, redirect, confirmationType],
+    [router, formID, redirect, confirmationType]
   )
 
   return (
     <div className="container max-w-[48rem] pb-20">
       {enableIntro && introContent && !hasSubmitted && (
-        <RichText className="mb-8" content={introContent} enableGutter={false} />
+        <RichText
+          className="mb-8"
+          content={introContent}
+          enableGutter={false}
+        />
       )}
       {!isLoading && hasSubmitted && confirmationType === 'message' && (
-        <RichText className="classes.confirmationMessage" content={confirmationMessage} />
+        <RichText
+          className="classes.confirmationMessage"
+          content={confirmationMessage}
+        />
       )}
       {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
       {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}

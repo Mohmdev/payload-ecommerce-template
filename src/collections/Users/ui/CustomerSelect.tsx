@@ -15,7 +15,8 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
     }[]
   >([])
 
-  const { value: stripeCustomerID } = useFormFields(([fields]) => fields[name]) || {}
+  const { value: stripeCustomerID } =
+    useFormFields(([fields]) => fields[name]) || {}
 
   React.useEffect(() => {
     const getStripeCustomers = async () => {
@@ -23,8 +24,8 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
         const customersFetch = await fetch(`/api/stripe/customers`, {
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         })
 
         const res = await customersFetch.json()
@@ -34,16 +35,16 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
             (acc, item) => {
               acc.push({
                 label: item.name || item.email || item.id,
-                value: item.id,
+                value: item.id
               })
               return acc
             },
             [
               {
                 label: 'Select a customer',
-                value: '',
-              },
-            ],
+                value: ''
+              }
+            ]
           )
           setOptions(fetchedCustomers)
         }
@@ -61,11 +62,13 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
 
   return (
     <div>
-      <p style={{ marginBottom: '0' }}>{typeof label === 'string' ? label : 'Customer'}</p>
+      <p style={{ marginBottom: '0' }}>
+        {typeof label === 'string' ? label : 'Customer'}
+      </p>
       <p
         style={{
           color: 'var(--theme-elevation-400)',
-          marginBottom: '0.75rem',
+          marginBottom: '0.75rem'
         }}
       >
         {`Select the related Stripe customer or `}
@@ -88,11 +91,12 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
             <span
               className="label"
               style={{
-                color: '#9A9A9A',
+                color: '#9A9A9A'
               }}
             >
               {`Manage "${
-                options.find((option) => option.value === stripeCustomerID)?.label || 'Unknown'
+                options.find((option) => option.value === stripeCustomerID)
+                  ?.label || 'Unknown'
               }" in Stripe`}
             </span>
             {/* <CopyToClipboard value={href} /> */}
@@ -101,7 +105,7 @@ export const CustomerSelect: React.FC<TextField> = (props) => {
             style={{
               fontWeight: '600',
               overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              textOverflow: 'ellipsis'
             }}
           >
             <a

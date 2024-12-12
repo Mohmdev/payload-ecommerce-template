@@ -12,9 +12,9 @@ export async function getRedirect(slug: string, depth = 1) {
     pagination: false,
     where: {
       from: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   })
   return redirects[0]
 }
@@ -24,5 +24,5 @@ export async function getRedirect(slug: string, depth = 1) {
  */
 export const getCachedRedirect = (slug: string) =>
   unstable_cache(async () => getRedirect(slug), [slug], {
-    tags: [`redirects_${slug}`],
+    tags: [`redirects_${slug}`]
   })

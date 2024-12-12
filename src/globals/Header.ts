@@ -5,7 +5,7 @@ import { link } from '@/fields/link'
 export const Header: GlobalConfig = {
   slug: 'header',
   access: {
-    read: () => true,
+    read: () => true
   },
   fields: [
     {
@@ -13,10 +13,10 @@ export const Header: GlobalConfig = {
       type: 'array',
       fields: [
         link({
-          appearances: false,
-        }),
+          appearances: false
+        })
       ],
-      maxRows: 6,
-    },
-  ],
+      maxRows: 6
+    }
+  ]
 }

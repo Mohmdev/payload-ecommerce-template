@@ -8,7 +8,10 @@ export default function Loading() {
         .fill(0)
         .map((_, index) => {
           return (
-            <Grid.Item className="animate-pulse bg-neutral-100 dark:bg-neutral-900" key={index} />
+            <Grid.Item
+              className="animate-pulse bg-neutral-100 dark:bg-neutral-900"
+              key={index}
+            />
           )
         })}
     </Grid>

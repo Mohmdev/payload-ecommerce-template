@@ -10,20 +10,20 @@ export const MediaBlock: Block = {
       options: [
         {
           label: 'Default',
-          value: 'default',
+          value: 'default'
         },
         {
           label: 'Fullscreen',
-          value: 'fullscreen',
-        },
-      ],
+          value: 'fullscreen'
+        }
+      ]
     },
     {
       name: 'media',
       type: 'upload',
       relationTo: 'media',
-      required: true,
-    },
+      required: true
+    }
   ],
-  interfaceName: 'MediaBlock',
+  interfaceName: 'MediaBlock'
 }

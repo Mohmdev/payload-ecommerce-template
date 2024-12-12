@@ -1,7 +1,14 @@
 import type { SerializedListItemNode, SerializedListNode } from '@lexical/list'
 import type { SerializedHeadingNode } from '@lexical/rich-text'
-import type { LinkFields, SerializedLinkNode } from '@payloadcms/richtext-lexical'
-import type { SerializedElementNode, SerializedLexicalNode, SerializedTextNode } from 'lexical'
+import type {
+  LinkFields,
+  SerializedLinkNode
+} from '@payloadcms/richtext-lexical'
+import type {
+  SerializedElementNode,
+  SerializedLexicalNode,
+  SerializedTextNode
+} from 'lexical'
 
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
@@ -18,7 +25,7 @@ import {
   IS_STRIKETHROUGH,
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
-  IS_UNDERLINE,
+  IS_UNDERLINE
 } from './nodeFormat'
 
 interface Props {
@@ -72,11 +79,16 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
         // NOTE: Hacky fix for
         // https://github.com/facebook/lexical/blob/d10c4e6e55261b2fdd7d1845aed46151d0f06a8c/packages/lexical-list/src/LexicalListItemNode.ts#L133
         // which does not return checked: false (only true - i.e. there is no prop for false)
-        const serializedChildrenFn = (node: SerializedElementNode): JSX.Element | null => {
+        const serializedChildrenFn = (
+          node: SerializedElementNode
+        ): JSX.Element | null => {
           if (node.children == null) {
             return null
           } else {
-            if (node?.type === 'list' && (node as SerializedListNode)?.listType === 'check') {
+            if (
+              node?.type === 'list' &&
+              (node as SerializedListNode)?.listType === 'check'
+            ) {
               for (const item of node.children) {
                 if ('checked' in item) {
                   if (!item?.checked) {
@@ -92,7 +104,9 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
         }
 
         const serializedChildren =
-          'children' in _node ? serializedChildrenFn(_node as SerializedElementNode) : ''
+          'children' in _node
+            ? serializedChildrenFn(_node as SerializedElementNode)
+            : ''
 
         if (_node.type === 'block') {
           // todo: fix types
@@ -113,7 +127,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'mediaBlock':
               return (
                 <MediaBlock
-                  className="col-start-1 col-span-3"
+                  className="col-span-3 col-start-1"
                   imgClassName="m-0"
                   key={index}
                   {...block}
@@ -122,7 +136,13 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 />
               )
             case 'banner':
-              return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
+              return (
+                <BannerBlock
+                  className="col-start-2 mb-4"
+                  key={index}
+                  {...block}
+                />
+              )
             default:
               return null
           }
@@ -141,7 +161,10 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'heading': {
               const node = _node as SerializedHeadingNode
 
-              type Heading = Extract<keyof JSX.IntrinsicElements, 'h1' | 'h2' | 'h3' | 'h4' | 'h5'>
+              type Heading = Extract<
+                keyof JSX.IntrinsicElements,
+                'h1' | 'h2' | 'h3' | 'h4' | 'h5'
+              >
               const Tag = node?.tag as Heading
               return (
                 <Tag className="col-start-2" key={index}>

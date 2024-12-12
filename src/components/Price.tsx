@@ -25,7 +25,7 @@ export const Price = ({
   className,
   currencyCode = 'USD',
   highestAmount,
-  lowestAmount,
+  lowestAmount
 }: Props & React.ComponentProps<'p'>) => {
   if (amount) {
     return (
@@ -33,7 +33,7 @@ export const Price = ({
         {`${new Intl.NumberFormat(undefined, {
           currency: currencyCode,
           currencyDisplay: 'narrowSymbol',
-          style: 'currency',
+          style: 'currency'
         }).format(amount / 100)}`}
       </p>
     )
@@ -45,11 +45,11 @@ export const Price = ({
         {`${new Intl.NumberFormat(undefined, {
           currency: currencyCode,
           currencyDisplay: 'narrowSymbol',
-          style: 'currency',
+          style: 'currency'
         }).format(lowestAmount / 100)} - ${new Intl.NumberFormat(undefined, {
           currency: currencyCode,
           currencyDisplay: 'narrowSymbol',
-          style: 'currency',
+          style: 'currency'
         }).format(highestAmount / 100)}`}
       </p>
     )
@@ -61,7 +61,7 @@ export const Price = ({
         {`${new Intl.NumberFormat(undefined, {
           currency: currencyCode,
           currencyDisplay: 'narrowSymbol',
-          style: 'currency',
+          style: 'currency'
         }).format(lowestAmount / 100)}`}
       </p>
     )

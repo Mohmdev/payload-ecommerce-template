@@ -11,13 +11,13 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) =>
       name: 'slug',
       type: 'text',
       admin: {
-        position: 'sidebar',
+        position: 'sidebar'
       },
       hooks: {
-        beforeValidate: [formatSlug(fieldToUse)],
+        beforeValidate: [formatSlug(fieldToUse)]
       },
       index: true,
-      label: 'Slug',
+      label: 'Slug'
     },
-    overrides,
+    overrides
   )

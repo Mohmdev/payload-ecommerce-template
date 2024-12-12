@@ -14,7 +14,7 @@ export const RichText: React.FC<Props> = ({
   className,
   content,
   enableGutter = true,
-  enableProse = true,
+  enableProse = true
 }) => {
   if (!content) {
     return null
@@ -26,9 +26,9 @@ export const RichText: React.FC<Props> = ({
         {
           'container ': enableGutter,
           'max-w-none': !enableGutter,
-          'mx-auto prose dark:prose-invert ': enableProse,
+          'prose mx-auto dark:prose-invert ': enableProse
         },
-        className,
+        className
       )}
     >
       {content &&

@@ -2,7 +2,13 @@
 
 import type { User } from '@/payload-types'
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 
 // eslint-disable-next-line no-unused-vars
 type ResetPassword = (args: {
@@ -13,7 +19,11 @@ type ResetPassword = (args: {
 
 type ForgotPassword = (args: { email: string }) => Promise<void> // eslint-disable-line no-unused-vars
 
-type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type Create = (args: {
+  email: string
+  password: string
+  passwordConfirm: string
+}) => Promise<void> // eslint-disable-line no-unused-vars
 
 type Login = (args: { email: string; password: string }) => Promise<User> // eslint-disable-line no-unused-vars
 
@@ -32,7 +42,9 @@ type AuthContext = {
 
 const Context = createContext({} as AuthContext)
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children
+}) => {
   const [user, setUser] = useState<User | null>()
 
   // used to track the single event of logging in or logging out
@@ -40,18 +52,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [status, setStatus] = useState<'loggedIn' | 'loggedOut' | undefined>()
   const create = useCallback<Create>(async (args) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/create`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-          passwordConfirm: args.passwordConfirm,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/create`,
+        {
+          body: JSON.stringify({
+            email: args.email,
+            password: args.password,
+            passwordConfirm: args.passwordConfirm
+          }),
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (res.ok) {
         const { data, errors } = await res.json()
@@ -68,17 +83,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = useCallback<Login>(async (args) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`,
+        {
+          body: JSON.stringify({
+            email: args.email,
+            password: args.password
+          }),
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (res.ok) {
         const { errors, user } = await res.json()
@@ -96,13 +114,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = useCallback<Logout>(async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/logout`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/logout`,
+        {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (res.ok) {
         setUser(null)
@@ -118,13 +139,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const fetchMe = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'GET',
-        })
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
+          {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'GET'
+          }
+        )
 
         if (res.ok) {
           const { user: meUser } = await res.json()
@@ -144,16 +168,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const forgotPassword = useCallback<ForgotPassword>(async (args) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`, {
-        body: JSON.stringify({
-          email: args.email,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`,
+        {
+          body: JSON.stringify({
+            email: args.email
+          }),
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (res.ok) {
         const { data, errors } = await res.json()
@@ -169,18 +196,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = useCallback<ResetPassword>(async (args) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/reset-password`, {
-        body: JSON.stringify({
-          password: args.password,
-          passwordConfirm: args.passwordConfirm,
-          token: args.token,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/reset-password`,
+        {
+          body: JSON.stringify({
+            password: args.password,
+            passwordConfirm: args.passwordConfirm,
+            token: args.token
+          }),
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (res.ok) {
         const { data, errors } = await res.json()
@@ -205,7 +235,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         resetPassword,
         setUser,
         status,
-        user,
+        user
       }}
     >
       {children}

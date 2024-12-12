@@ -25,13 +25,13 @@ export const Message: React.FC<{
     return (
       <div
         className={clsx(
-          'p-4 border border-border border-solid my-8',
+          'my-8 border border-solid border-border p-4',
           {
             'border-green-500 ': Boolean(success),
             'border-orange-500 ': Boolean(warning),
-            'border-red-500 ': Boolean(error),
+            'border-red-500 ': Boolean(error)
           },
-          className,
+          className
         )}
       >
         {messageToRender}

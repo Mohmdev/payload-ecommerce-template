@@ -8,9 +8,9 @@ export default function robots() {
     host: baseUrl,
     rules: [
       {
-        userAgent: '*',
-      },
+        userAgent: '*'
+      }
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`
   }
 }

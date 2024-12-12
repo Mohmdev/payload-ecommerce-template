@@ -20,7 +20,9 @@ export function VariantSelector({ product }: { product: Product }) {
   const searchParams = useSearchParams()
   const variants = product.variants?.variants
   const variantOptions = product.variants?.options
-  const hasVariants = Boolean(product.enableVariants && variants?.length && variantOptions?.length)
+  const hasVariants = Boolean(
+    product.enableVariants && variants?.length && variantOptions?.length
+  )
 
   if (!hasVariants) {
     return null
@@ -35,10 +37,10 @@ export function VariantSelector({ product }: { product: Product }) {
       ...info.options.reduce(
         (accumulator, option) => ({
           ...accumulator,
-          [option.key.slug]: option.slug,
+          [option.key.slug]: option.slug
         }),
-        {},
-      ),
+        {}
+      )
     }
   }) as Combination[]
 
@@ -54,7 +56,9 @@ export function VariantSelector({ product }: { product: Product }) {
               const optionNameLowerCase = key.slug.toLowerCase()
 
               // Base option params on current params so we can preserve any other param state in the url.
-              const optionSearchParams = new URLSearchParams(searchParams.toString())
+              const optionSearchParams = new URLSearchParams(
+                searchParams.toString()
+              )
 
               // Remove image and variant ID from this search params so we can loop over it safely.
               optionSearchParams.delete('variant')
@@ -75,24 +79,29 @@ export function VariantSelector({ product }: { product: Product }) {
               // This is the "magic" that will cross check possible variant combinations and preemptively
               // disable combinations that are not available. For example, if the color gray is only available in size medium,
               // then all other sizes should be disabled.
-              const filtered = Array.from(optionSearchParams.entries()).filter(([key, value]) =>
-                variants?.find((variant) => {
-                  const variantInfo = variant.info as InfoType
-                  const option = variantInfo.options.find((option) => option.key.slug === key)
+              const filtered = Array.from(optionSearchParams.entries()).filter(
+                ([key, value]) =>
+                  variants?.find((variant) => {
+                    const variantInfo = variant.info as InfoType
+                    const option = variantInfo.options.find(
+                      (option) => option.key.slug === key
+                    )
 
-                  return option?.slug === value
-                }),
+                    return option?.slug === value
+                  })
               )
 
               const isAvailableForSale = combinations.find((combination) =>
                 filtered.every(
-                  ([key, value]) => combination[key] === value && combination.availableForSale,
-                ),
+                  ([key, value]) =>
+                    combination[key] === value && combination.availableForSale
+                )
               )
 
               // The option is active if it's in the url params.
               const isActive =
-                Boolean(isAvailableForSale) && searchParams.get(optionNameLowerCase) === option.slug
+                Boolean(isAvailableForSale) &&
+                searchParams.get(optionNameLowerCase) === option.slug
 
               return (
                 <button
@@ -104,15 +113,18 @@ export function VariantSelector({ product }: { product: Product }) {
                       'relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 before:dark:bg-neutral-700':
                         !isAvailableForSale,
                       'ring-1 ring-transparent transition duration-300 ease-in-out hover:scale-110 hover:ring-blue-600 ':
-                        !isActive && isAvailableForSale,
-                    },
+                        !isActive && isAvailableForSale
+                    }
                   )}
                   disabled={!isAvailableForSale}
                   key={option.slug}
                   onClick={() => {
-                    router.replace(`${optionUrl}&variant=${isAvailableForSale?.id}`, {
-                      scroll: false,
-                    })
+                    router.replace(
+                      `${optionUrl}&variant=${isAvailableForSale?.id}`,
+                      {
+                        scroll: false
+                      }
+                    )
                   }}
                   title={`${option.label} ${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
                   type="button"

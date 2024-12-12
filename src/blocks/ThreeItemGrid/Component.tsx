@@ -1,4 +1,8 @@
-import type { Media, Product, ThreeItemGridBlock as ThreeItemGridBlockProps } from '@/payload-types'
+import type {
+  Media,
+  Product,
+  ThreeItemGridBlock as ThreeItemGridBlockProps
+} from '@/payload-types'
 
 import { GridTileImage } from '@/components/grid/tile'
 import Link from 'next/link'
@@ -6,7 +10,7 @@ import React from 'react'
 
 function ThreeItemGridItem({
   item,
-  size,
+  size
 }: {
   item: Product
   priority?: boolean
@@ -14,15 +18,22 @@ function ThreeItemGridItem({
 }) {
   return (
     <div
-      className={size === 'full' ? 'md:col-span-4 md:row-span-2' : 'md:col-span-2 md:row-span-1'}
+      className={
+        size === 'full'
+          ? 'md:col-span-4 md:row-span-2'
+          : 'md:col-span-2 md:row-span-1'
+      }
     >
-      <Link className="relative block aspect-square h-full w-full" href={`/product/${item.slug}`}>
+      <Link
+        className="relative block aspect-square h-full w-full"
+        href={`/product/${item.slug}`}
+      >
         <GridTileImage
           label={{
             amount: item.price!,
             currencyCode: item.currency!,
             position: size === 'full' ? 'center' : 'bottom',
-            title: item.title,
+            title: item.title
           }}
           media={item.meta?.image as Media}
         />
@@ -31,7 +42,9 @@ function ThreeItemGridItem({
   )
 }
 
-export const ThreeItemGridBlock: React.FC<ThreeItemGridBlockProps> = async ({ products }) => {
+export const ThreeItemGridBlock: React.FC<ThreeItemGridBlockProps> = async ({
+  products
+}) => {
   if (!products || !products[0] || !products[1] || !products[2]) return null
 
   const [firstProduct, secondProduct, thirdProduct] = products

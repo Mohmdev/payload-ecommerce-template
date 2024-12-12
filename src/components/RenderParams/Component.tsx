@@ -15,7 +15,7 @@ export type Props = {
 export const RenderParamsComponent: React.FC<Props> = ({
   className,
   onParams,
-  params = ['error', 'warning', 'success', 'message'],
+  params = ['error', 'warning', 'success', 'message']
 }) => {
   const searchParams = useSearchParams()
   const paramValues = params.map((param) => searchParams?.get(param))
@@ -37,7 +37,7 @@ export const RenderParamsComponent: React.FC<Props> = ({
               className="mb-8"
               key={paramValue}
               {...{
-                [params[index]]: paramValue,
+                [params[index]]: paramValue
               }}
             />
           )

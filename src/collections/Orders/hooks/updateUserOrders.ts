@@ -8,17 +8,22 @@ import type { Order } from '@/payload-types'
 export const updateUserOrders: CollectionAfterChangeHook<Order> = async ({
   doc,
   operation,
-  req,
+  req
 }) => {
   const { payload } = req
 
-  if ((operation === 'create' || operation === 'update') && doc.orderedBy && doc.items) {
-    const orderedBy = typeof doc.orderedBy === 'object' ? doc.orderedBy.id : doc.orderedBy
+  if (
+    (operation === 'create' || operation === 'update') &&
+    doc.orderedBy &&
+    doc.items
+  ) {
+    const orderedBy =
+      typeof doc.orderedBy === 'object' ? doc.orderedBy.id : doc.orderedBy
 
     const user = await payload.findByID({
       id: orderedBy,
       collection: 'users',
-      req,
+      req
     })
 
     if (user) {
@@ -27,11 +32,13 @@ export const updateUserOrders: CollectionAfterChangeHook<Order> = async ({
         collection: 'users',
         data: {
           orders: [
-            ...(user?.orders?.map((order) => (typeof order === 'object' ? order.id : order)) || []), // eslint-disable-line function-paren-newline
-            doc.id,
-          ],
+            ...(user?.orders?.map((order) =>
+              typeof order === 'object' ? order.id : order
+            ) || []), // eslint-disable-line function-paren-newline
+            doc.id
+          ]
         },
-        req,
+        req
       })
     }
   }

@@ -9,7 +9,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from '@/components/ui/sheet'
 import { useCart } from '@/providers/Cart'
 import { ShoppingCart } from 'lucide-react'
@@ -27,8 +27,11 @@ export function CartModal() {
   const [isOpen, setIsOpen] = useState(false)
   const quantityRef = useRef(
     cart?.items?.length
-      ? cart.items.reduce((quantity, product) => (product.quantity || 0) + quantity, 0)
-      : 0,
+      ? cart.items.reduce(
+          (quantity, product) => (product.quantity || 0) + quantity,
+          0
+        )
+      : 0
   )
   const pathname = usePathname()
 
@@ -60,17 +63,21 @@ export function CartModal() {
         <SheetHeader>
           <SheetTitle>My Cart</SheetTitle>
 
-          <SheetDescription>Manage your cart here, add items to view the total.</SheetDescription>
+          <SheetDescription>
+            Manage your cart here, add items to view the total.
+          </SheetDescription>
         </SheetHeader>
 
         {!cart || cart?.items?.length === 0 ? (
           <div>
             <ShoppingCart className="h-16" />
-            <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
+            <p className="mt-6 text-center text-2xl font-bold">
+              Your cart is empty.
+            </p>
           </div>
         ) : (
-          <div className="flex-grow flex">
-            <div className="flex flex-col justify-between w-full">
+          <div className="flex flex-grow">
+            <div className="flex w-full flex-col justify-between">
               <ul className="flex-grow overflow-auto py-4">
                 {cart?.items?.map((item, i) => {
                   if (typeof item.product === 'string' || !item || !item.url)
@@ -78,16 +85,21 @@ export function CartModal() {
 
                   const product = item.product
                   let image =
-                    product?.meta?.image && typeof product?.meta?.image !== 'string'
+                    product?.meta?.image &&
+                    typeof product?.meta?.image !== 'string'
                       ? product.meta.image
                       : undefined
 
                   const isVariant = Boolean(item.variant)
                   const variant = item.product?.variants?.variants?.length
-                    ? item.product.variants.variants.find((v) => v.id === item.variant)
+                    ? item.product.variants.variants.find(
+                        (v) => v.id === item.variant
+                      )
                     : undefined
 
-                  const info = isVariant ? (variant?.info as InfoType) : (product?.info as InfoType)
+                  const info = isVariant
+                    ? (variant?.info as InfoType)
+                    : (product?.info as InfoType)
 
                   if (isVariant) {
                     if (
@@ -107,7 +119,10 @@ export function CartModal() {
                         <div className="absolute z-40 -mt-2 ml-[55px]">
                           <DeleteItemButton item={item} />
                         </div>
-                        <Link className="z-30 flex flex-row space-x-4" href={item.url}>
+                        <Link
+                          className="z-30 flex flex-row space-x-4"
+                          href={item.url}
+                        >
                           <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
                             {image?.url && (
                               <Image
@@ -121,7 +136,9 @@ export function CartModal() {
                           </div>
 
                           <div className="flex flex-1 flex-col text-base">
-                            <span className="leading-tight">{product?.title}</span>
+                            <span className="leading-tight">
+                              {product?.title}
+                            </span>
                             {isVariant && info.options?.length ? (
                               <p className="text-sm text-neutral-500 dark:text-neutral-400">
                                 {info.options
@@ -144,7 +161,9 @@ export function CartModal() {
                           <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                             <EditItemQuantityButton item={item} type="minus" />
                             <p className="w-6 text-center">
-                              <span className="w-full text-sm">{item.quantity}</span>
+                              <span className="w-full text-sm">
+                                {item.quantity}
+                              </span>
                             </p>
                             <EditItemQuantityButton item={item} type="plus" />
                           </div>

@@ -10,16 +10,16 @@ import React, { useState } from 'react'
 const collectionLabels = {
   pages: {
     plural: 'Pages',
-    singular: 'Page',
+    singular: 'Page'
   },
   posts: {
     plural: 'Posts',
-    singular: 'Post',
+    singular: 'Post'
   },
   projects: {
     plural: 'Projects',
-    singular: 'Project',
-  },
+    singular: 'Project'
+  }
 }
 
 const Title: React.FC = () => <span>Dashboard</span>
@@ -38,9 +38,9 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn('py-2 bg-black text-white', {
+      className={cn('bg-black py-2 text-white', {
         block: show,
-        hidden: !show,
+        hidden: !show
       })}
     >
       <div className="container">
@@ -50,13 +50,13 @@ export const AdminBar: React.FC<{
           classNames={{
             controls: 'font-medium text-white',
             logo: 'text-white',
-            user: 'text-white',
+            user: 'text-white'
           }}
           cmsURL={process.env.NEXT_PUBLIC_SERVER_URL}
           collection={collection}
           collectionLabels={{
             plural: collectionLabels[collection]?.plural || 'Pages',
-            singular: collectionLabels[collection]?.singular || 'Page',
+            singular: collectionLabels[collection]?.singular || 'Page'
           }}
           logo={<Title />}
           onAuthChange={onAuthChange}
@@ -64,7 +64,7 @@ export const AdminBar: React.FC<{
             backgroundColor: 'transparent',
             padding: 0,
             position: 'relative',
-            zIndex: 'unset',
+            zIndex: 'unset'
           }}
         />
       </div>

@@ -28,15 +28,16 @@ export function GridTileImage({
         {
           'border-2 border-blue-600': active,
           'border-neutral-200 dark:border-neutral-800': !active,
-          relative: label,
-        },
+          relative: label
+        }
       )}
     >
       {props.media ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
         <Media
           className={clsx('relative h-full w-full object-cover', {
-            'transition duration-300 ease-in-out group-hover:scale-105': isInteractive,
+            'transition duration-300 ease-in-out group-hover:scale-105':
+              isInteractive
           })}
           height={80}
           imgClassName="h-full w-full object-cover"

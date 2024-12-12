@@ -6,7 +6,7 @@ import {
   HeadingFeature,
   HorizontalRuleFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor
 } from '@payloadcms/richtext-lexical'
 
 import type { ProductVariant } from './ui/types'
@@ -28,7 +28,7 @@ export const Products: CollectionConfig = {
     create: admins,
     delete: admins,
     read: adminsOrPublished,
-    update: admins,
+    update: admins
   },
   admin: {
     defaultColumns: ['title', 'stripeProductID', '_status'],
@@ -36,30 +36,32 @@ export const Products: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/product/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          path: `/product/${typeof data?.slug === 'string' ? data.slug : ''}`
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
-      },
+      }
     },
     preview: (doc) =>
-      generatePreviewPath({ path: `/product/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
-    useAsTitle: 'title',
+      generatePreviewPath({
+        path: `/product/${typeof doc?.slug === 'string' ? doc.slug : ''}`
+      }),
+    useAsTitle: 'title'
   },
   fields: [
     {
       name: 'title',
 
       type: 'text',
-      required: true,
+      required: true
     },
     {
       name: 'publishedOn',
       type: 'date',
       admin: {
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: 'dayAndTime'
         },
-        position: 'sidebar',
+        position: 'sidebar'
       },
       hooks: {
         beforeChange: [
@@ -68,9 +70,9 @@ export const Products: CollectionConfig = {
               return new Date()
             }
             return value
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
     {
       type: 'tabs',
@@ -84,42 +86,45 @@ export const Products: CollectionConfig = {
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    HeadingFeature({
+                      enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
+                    HorizontalRuleFeature()
                   ]
-                },
+                }
               }),
               label: false,
-              required: false,
+              required: false
             },
             {
               name: 'gallery',
               type: 'upload',
               relationTo: 'media',
               required: true,
-              hasMany: true,
+              hasMany: true
             },
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock],
-            },
+              blocks: [CallToAction, Content, MediaBlock]
+            }
           ],
-          label: 'Content',
+          label: 'Content'
         },
         {
           fields: [
             {
               name: 'enableVariants',
-              type: 'checkbox',
+              type: 'checkbox'
             },
             {
               name: 'variants',
               type: 'group',
               admin: {
-                condition: (data, siblingData) => Boolean(siblingData.enableVariants),
+                condition: (data, siblingData) =>
+                  Boolean(siblingData.enableVariants)
               },
               fields: [
                 {
@@ -127,9 +132,10 @@ export const Products: CollectionConfig = {
                   type: 'array',
                   admin: {
                     components: {
-                      RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
+                      RowLabel:
+                        '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel'
                     },
-                    initCollapsed: true,
+                    initCollapsed: true
                   },
                   fields: [
                     {
@@ -138,23 +144,24 @@ export const Products: CollectionConfig = {
                         {
                           name: 'label',
                           type: 'text',
-                          required: true,
+                          required: true
                         },
                         {
                           name: 'slug',
                           type: 'text',
-                          required: true,
-                        },
-                      ],
+                          required: true
+                        }
+                      ]
                     },
                     {
                       name: 'values',
                       type: 'array',
                       admin: {
                         components: {
-                          RowLabel: '@/collections/Products/ui/RowLabels/OptionLabel#OptionLabel',
+                          RowLabel:
+                            '@/collections/Products/ui/RowLabels/OptionLabel#OptionLabel'
                         },
-                        initCollapsed: true,
+                        initCollapsed: true
                       },
                       fields: [
                         {
@@ -163,31 +170,32 @@ export const Products: CollectionConfig = {
                             {
                               name: 'label',
                               type: 'text',
-                              required: true,
+                              required: true
                             },
                             {
                               name: 'slug',
                               type: 'text',
-                              required: true,
-                            },
-                          ],
-                        },
-                      ],
-                    },
+                              required: true
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   ],
                   label: 'Variant options',
-                  minRows: 1,
+                  minRows: 1
                 },
                 {
                   name: 'variants',
                   type: 'array',
                   admin: {
                     components: {
-                      RowLabel: '@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel',
+                      RowLabel:
+                        '@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel'
                     },
                     condition: (data, siblingData) => {
                       return Boolean(siblingData?.options?.length)
-                    },
+                    }
                   },
                   fields: [
                     {
@@ -195,11 +203,12 @@ export const Products: CollectionConfig = {
                       type: 'text',
                       admin: {
                         components: {
-                          Field: '@/collections/Products/ui/VariantSelect#VariantSelect',
-                        },
+                          Field:
+                            '@/collections/Products/ui/VariantSelect#VariantSelect'
+                        }
                       },
                       hasMany: true,
-                      required: true,
+                      required: true
                     },
                     {
                       name: 'stripeProductID',
@@ -207,10 +216,10 @@ export const Products: CollectionConfig = {
                       admin: {
                         components: {
                           Field:
-                            '@/collections/Products/ui/StripeProductSelect#StripeProductSelect',
-                        },
+                            '@/collections/Products/ui/StripeProductSelect#StripeProductSelect'
+                        }
                       },
-                      label: 'Stripe Product ID',
+                      label: 'Stripe Product ID'
                     },
                     {
                       type: 'row',
@@ -221,31 +230,31 @@ export const Products: CollectionConfig = {
                           admin: {
                             description:
                               'Define stock for this variant. A stock of 0 disables checkout for this variant.',
-                            width: '50%',
+                            width: '50%'
                           },
                           defaultValue: 0,
-                          required: true,
-                        },
-                      ],
+                          required: true
+                        }
+                      ]
                     },
                     {
                       name: 'info',
                       type: 'json',
                       admin: {
                         hidden: true,
-                        readOnly: true,
-                      },
+                        readOnly: true
+                      }
                     },
                     {
                       name: 'images',
                       type: 'upload',
                       relationTo: 'media',
-                      hasMany: true,
-                    },
+                      hasMany: true
+                    }
                   ],
                   labels: {
                     plural: 'Variants',
-                    singular: 'Variant',
+                    singular: 'Variant'
                   },
                   minRows: 1,
                   validate: (value, { siblingData }) => {
@@ -254,19 +263,21 @@ export const Products: CollectionConfig = {
                         (variant: ProductVariant, index) => {
                           // Check this against other variants
                           const dedupedArray = [...siblingData.variants].filter(
-                            (_, i) => i !== index,
+                            (_, i) => i !== index
                           )
 
                           // Join the arrays then compare the strings, note that we sort the array before it's saved in the custom component
-                          const test = dedupedArray.find((otherOption: ProductVariant) => {
-                            const firstOption = otherOption?.options?.join('')
-                            const secondOption = variant?.options?.join('')
+                          const test = dedupedArray.find(
+                            (otherOption: ProductVariant) => {
+                              const firstOption = otherOption?.options?.join('')
+                              const secondOption = variant?.options?.join('')
 
-                            return firstOption === secondOption
-                          })
+                              return firstOption === secondOption
+                            }
+                          )
 
                           return Boolean(test)
-                        },
+                        }
                       )
 
                       if (hasDuplicate) {
@@ -275,29 +286,30 @@ export const Products: CollectionConfig = {
                     }
 
                     return true
-                  },
-                },
+                  }
+                }
               ],
-              label: false,
+              label: false
             },
             {
               name: 'stripeProductID',
               type: 'text',
               admin: {
                 components: {
-                  Field: '@/collections/Products/ui/StripeProductSelect#StripeProductSelect',
+                  Field:
+                    '@/collections/Products/ui/StripeProductSelect#StripeProductSelect'
                 },
-                condition: (data) => !data.enableVariants,
+                condition: (data) => !data.enableVariants
               },
-              label: 'Stripe Product',
+              label: 'Stripe Product'
             },
             {
               name: 'info',
               type: 'json',
               admin: {
                 condition: (data) => !data.enableVariants,
-                hidden: true,
-              },
+                hidden: true
+              }
             },
             {
               name: 'stock',
@@ -306,39 +318,39 @@ export const Products: CollectionConfig = {
               admin: {
                 condition: (data) => !data.enableVariants,
                 description:
-                  'Define stock for this product. A stock of 0 disables checkout for this product.',
+                  'Define stock for this product. A stock of 0 disables checkout for this product.'
               },
               defaultValue: 0,
-              required: true,
+              required: true
             },
             {
               name: 'price',
               type: 'number',
               admin: {
-                hidden: true,
-              },
+                hidden: true
+              }
             },
             {
               name: 'currency',
               type: 'text',
               admin: {
-                hidden: true,
-              },
-            },
+                hidden: true
+              }
+            }
           ],
-          label: 'Product Details',
-        },
-      ],
+          label: 'Product Details'
+        }
+      ]
     },
     {
       name: 'categories',
       type: 'relationship',
       admin: {
         position: 'sidebar',
-        sortOptions: 'title',
+        sortOptions: 'title'
       },
       hasMany: true,
-      relationTo: 'categories',
+      relationTo: 'categories'
     },
     {
       name: 'relatedProducts',
@@ -346,12 +358,12 @@ export const Products: CollectionConfig = {
       filterOptions: ({ id }) => {
         return {
           id: {
-            not_in: [id],
-          },
+            not_in: [id]
+          }
         }
       },
       hasMany: true,
-      relationTo: 'products',
+      relationTo: 'products'
     },
     slugField(),
     {
@@ -360,20 +372,20 @@ export const Products: CollectionConfig = {
       admin: {
         hidden: true,
         position: 'sidebar',
-        readOnly: true,
+        readOnly: true
       },
-      label: 'Skip Sync',
-    },
+      label: 'Skip Sync'
+    }
   ],
   hooks: {
     afterChange: [revalidateProduct],
     afterDelete: [deleteProductFromCarts],
-    beforeChange: [beforeProductChange],
+    beforeChange: [beforeProductChange]
   },
   versions: {
     drafts: {
-      autosave: true,
+      autosave: true
     },
-    maxPerDoc: 50,
-  },
+    maxPerDoc: 50
+  }
 }

@@ -1,5 +1,9 @@
 import type { CheckboxField } from '@payloadcms/plugin-form-builder/types'
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import type {
+  FieldErrorsImpl,
+  FieldValues,
+  UseFormRegister
+} from 'react-hook-form'
 
 import { Checkbox as CheckboxUi } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
@@ -19,7 +23,15 @@ export const Checkbox: React.FC<
     register: UseFormRegister<FieldValues>
     setValue: any
   }
-> = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
+> = ({
+  name,
+  defaultValue,
+  errors,
+  label,
+  register,
+  required: requiredFromProps,
+  width
+}) => {
   return (
     <Width width={width}>
       <div className="flex items-center gap-2">

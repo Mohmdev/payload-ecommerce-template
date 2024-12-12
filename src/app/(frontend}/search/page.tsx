@@ -6,11 +6,11 @@ import React from 'react'
 
 export const metadata = {
   description: 'Search for products in the store.',
-  title: 'Search',
+  title: 'Search'
 }
 
 export default async function SearchPage({
-  searchParams,
+  searchParams
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
@@ -26,18 +26,18 @@ export default async function SearchPage({
             or: [
               {
                 title: {
-                  like: searchValue,
-                },
+                  like: searchValue
+                }
               },
               {
                 description: {
-                  like: searchValue,
-                },
-              },
-            ],
-          },
+                  like: searchValue
+                }
+              }
+            ]
+          }
         }
-      : {}),
+      : {})
   })
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
 

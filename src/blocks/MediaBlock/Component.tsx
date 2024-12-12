@@ -26,7 +26,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
     imgClassName,
     media,
     position = 'default',
-    staticImage,
+    staticImage
   } = props
 
   let caption
@@ -37,9 +37,9 @@ export const MediaBlock: React.FC<Props> = (props) => {
       className={cn(
         '',
         {
-          container: position === 'default' && enableGutter,
+          container: position === 'default' && enableGutter
         },
-        className,
+        className
       )}
     >
       {position === 'fullscreen' && (
@@ -48,16 +48,20 @@ export const MediaBlock: React.FC<Props> = (props) => {
         </div>
       )}
       {position === 'default' && (
-        <Media imgClassName={cn('rounded', imgClassName)} resource={media} src={staticImage} />
+        <Media
+          imgClassName={cn('rounded', imgClassName)}
+          resource={media}
+          src={staticImage}
+        />
       )}
       {caption && (
         <div
           className={cn(
             'mt-6',
             {
-              container: position === 'fullscreen',
+              container: position === 'fullscreen'
             },
-            captionClassName,
+            captionClassName
           )}
         >
           <RichText content={caption} enableGutter={false} />

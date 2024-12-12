@@ -10,7 +10,8 @@ import * as React from 'react'
 export const LinkToPaymentIntent: React.FC<TextField> = (props) => {
   const { name, label } = props
 
-  const { value: stripePaymentIntentID } = useFormFields(([fields]) => fields[name]) || {}
+  const { value: stripePaymentIntentID } =
+    useFormFields(([fields]) => fields[name]) || {}
 
   const href = `https://dashboard.stripe.com/${
     process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY ? 'test/' : ''
@@ -28,7 +29,7 @@ export const LinkToPaymentIntent: React.FC<TextField> = (props) => {
             <span
               className="label"
               style={{
-                color: '#9A9A9A',
+                color: '#9A9A9A'
               }}
             >
               Manage in Stripe
@@ -39,7 +40,7 @@ export const LinkToPaymentIntent: React.FC<TextField> = (props) => {
             style={{
               fontWeight: '600',
               overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              textOverflow: 'ellipsis'
             }}
           >
             <a

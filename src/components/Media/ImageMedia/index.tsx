@@ -25,7 +25,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     src: srcFromProps,
     onClick,
     onLoad: onLoadFromProps,
-    loading: loadingFromProps,
+    loading: loadingFromProps
   } = props
 
   const [isLoading, setIsLoading] = React.useState(true)
@@ -41,7 +41,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       filename: fullFilename,
       height: fullHeight,
       url,
-      width: fullWidth,
+      width: fullWidth
     } = resource
 
     width = fullWidth!

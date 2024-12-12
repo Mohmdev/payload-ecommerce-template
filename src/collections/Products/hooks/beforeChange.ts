@@ -9,11 +9,14 @@ const stripe = new Stripe(stripeSecretKey || '', { apiVersion: '2022-08-01' })
 
 const logs = false
 
-export const beforeProductChange: CollectionBeforeChangeHook<Product> = async ({ data, req }) => {
+export const beforeProductChange: CollectionBeforeChangeHook<Product> = async ({
+  data,
+  req
+}) => {
   const { payload } = req
   const newDoc: Record<string, unknown> = {
     ...data,
-    skipSync: false, // Set back to 'false' so that all changes continue to sync to Stripe
+    skipSync: false // Set back to 'false' so that all changes continue to sync to Stripe
   }
 
   if (data.skipSync) {

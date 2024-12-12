@@ -2,7 +2,10 @@
 //This copy-and-pasted from lexical here here: https://github.com/facebook/lexical/blob/c2ceee223f46543d12c574e62155e619f9a18a5d/packages/lexical/src/LexicalConstants.ts
 
 import type { ElementFormatType, TextFormatType } from 'lexical'
-import type { TextDetailType, TextModeType } from 'lexical/nodes/LexicalTextNode'
+import type {
+  TextDetailType,
+  TextModeType
+} from 'lexical/nodes/LexicalTextNode'
 
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -86,21 +89,24 @@ export const TEXT_TYPE_TO_FORMAT: Record<TextFormatType | string, number> = {
   strikethrough: IS_STRIKETHROUGH,
   subscript: IS_SUBSCRIPT,
   superscript: IS_SUPERSCRIPT,
-  underline: IS_UNDERLINE,
+  underline: IS_UNDERLINE
 }
 
 export const DETAIL_TYPE_TO_DETAIL: Record<TextDetailType | string, number> = {
   directionless: IS_DIRECTIONLESS,
-  unmergeable: IS_UNMERGEABLE,
+  unmergeable: IS_UNMERGEABLE
 }
 
-export const ELEMENT_TYPE_TO_FORMAT: Record<Exclude<ElementFormatType, ''>, number> = {
+export const ELEMENT_TYPE_TO_FORMAT: Record<
+  Exclude<ElementFormatType, ''>,
+  number
+> = {
   center: IS_ALIGN_CENTER,
   end: IS_ALIGN_END,
   justify: IS_ALIGN_JUSTIFY,
   left: IS_ALIGN_LEFT,
   right: IS_ALIGN_RIGHT,
-  start: IS_ALIGN_START,
+  start: IS_ALIGN_START
 }
 
 export const ELEMENT_FORMAT_TO_TYPE: Record<number, ElementFormatType> = {
@@ -109,17 +115,17 @@ export const ELEMENT_FORMAT_TO_TYPE: Record<number, ElementFormatType> = {
   [IS_ALIGN_JUSTIFY]: 'justify',
   [IS_ALIGN_LEFT]: 'left',
   [IS_ALIGN_RIGHT]: 'right',
-  [IS_ALIGN_START]: 'start',
+  [IS_ALIGN_START]: 'start'
 }
 
 export const TEXT_MODE_TO_TYPE: Record<TextModeType, 0 | 1 | 2> = {
   normal: IS_NORMAL,
   segmented: IS_SEGMENTED,
-  token: IS_TOKEN,
+  token: IS_TOKEN
 }
 
 export const TEXT_TYPE_TO_MODE: Record<number, TextModeType> = {
   [IS_NORMAL]: 'normal',
   [IS_SEGMENTED]: 'segmented',
-  [IS_TOKEN]: 'token',
+  [IS_TOKEN]: 'token'
 }

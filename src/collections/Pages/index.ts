@@ -21,36 +21,38 @@ export const Pages: CollectionConfig = {
     create: admins,
     delete: admins,
     read: adminsOrPublished,
-    update: admins,
+    update: admins
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
-      },
+      }
     },
     preview: (doc) =>
-      generatePreviewPath({ path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
-    useAsTitle: 'title',
+      generatePreviewPath({
+        path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}`
+      }),
+    useAsTitle: 'title'
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      required: true,
+      required: true
     },
     {
       name: 'publishedOn',
       type: 'date',
       admin: {
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: 'dayAndTime'
         },
-        position: 'sidebar',
+        position: 'sidebar'
       },
       hooks: {
         beforeChange: [
@@ -59,39 +61,47 @@ export const Pages: CollectionConfig = {
               return new Date()
             }
             return value
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
     {
       type: 'tabs',
       tabs: [
         {
           fields: [hero],
-          label: 'Hero',
+          label: 'Hero'
         },
         {
           fields: [
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, Carousel, ThreeItemGrid, Banner],
-              required: true,
-            },
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                Carousel,
+                ThreeItemGrid,
+                Banner
+              ],
+              required: true
+            }
           ],
-          label: 'Content',
-        },
-      ],
+          label: 'Content'
+        }
+      ]
     },
-    slugField(),
+    slugField()
   ],
   hooks: {
-    afterChange: [revalidatePage],
+    afterChange: [revalidatePage]
   },
   versions: {
     drafts: {
-      autosave: true,
+      autosave: true
     },
-    maxPerDoc: 50,
-  },
+    maxPerDoc: 50
+  }
 }

@@ -39,7 +39,11 @@ const twitterSite = TWITTER_SITE ? ensureStartsWith(TWITTER_SITE, 'https://') : 
     }),
 } */
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children
+}: {
+  children: ReactNode
+}) {
   return (
     <html className={GeistSans.variable} lang="en" suppressHydrationWarning>
       <head>

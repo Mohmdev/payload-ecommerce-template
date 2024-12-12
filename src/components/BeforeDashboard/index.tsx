@@ -16,7 +16,9 @@ export const BeforeDashboard: React.FC = () => {
       <ul className={`${baseClass}__instructions`}>
         <li>
           <SeedButton />
-          {' with a few products and pages to jump-start your new project, then '}
+          {
+            ' with a few products and pages to jump-start your new project, then '
+          }
           <a href="/">visit your website</a>
           {' to see the results.'}
         </li>
@@ -43,13 +45,15 @@ export const BeforeDashboard: React.FC = () => {
         </li>
         <li>
           {/* <Link to="/admin/collections/products">Link each of your products</Link> */}
-          {' to Stripe by selecting the corresponding product using the dropdown under '}
+          {
+            ' to Stripe by selecting the corresponding product using the dropdown under '
+          }
           <i>Product Details</i>.
         </li>
         <li>
-          If you created this repo using Payload Cloud, head over to GitHub and clone it to your
-          local machine. It will be under the <i>GitHub Scope</i> that you selected when creating
-          this project.
+          If you created this repo using Payload Cloud, head over to GitHub and
+          clone it to your local machine. It will be under the{' '}
+          <i>GitHub Scope</i> that you selected when creating this project.
         </li>
         <li>
           {'Modify your '}
@@ -68,7 +72,9 @@ export const BeforeDashboard: React.FC = () => {
           >
             fields
           </a>
-          {' as needed. If you are new to Payload, we also recommend you check out the '}
+          {
+            ' as needed. If you are new to Payload, we also recommend you check out the '
+          }
           <a
             href="https://payloadcms.com/docs/getting-started/what-is-payload"
             rel="noopener noreferrer"
@@ -79,7 +85,8 @@ export const BeforeDashboard: React.FC = () => {
           {' docs.'}
         </li>
         <li>
-          Commit and push your changes to the repository to trigger a redeployment of your project.
+          Commit and push your changes to the repository to trigger a
+          redeployment of your project.
         </li>
       </ul>
       {'Pro Tip: This block is a '}
@@ -90,7 +97,8 @@ export const BeforeDashboard: React.FC = () => {
       >
         custom component
       </a>
-      , you can remove it at any time by updating your <strong>payload.config</strong>.
+      , you can remove it at any time by updating your{' '}
+      <strong>payload.config</strong>.
     </div>
   )
 }

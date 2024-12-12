@@ -9,7 +9,7 @@ export const adminsOrPublished: Access = ({ req: { user } }) => {
 
   return {
     _status: {
-      equals: 'published',
-    },
+      equals: 'published'
+    }
   }
 }

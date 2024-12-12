@@ -19,12 +19,12 @@ export const ContentBlock: React.FC<
     full: '12',
     half: '6',
     oneThird: '4',
-    twoThirds: '8',
+    twoThirds: '8'
   }
 
   return (
     <div className="container my-16">
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-16">
+      <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
@@ -32,9 +32,12 @@ export const ContentBlock: React.FC<
 
             return (
               <div
-                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
-                  'md:col-span-2': size !== 'full',
-                })}
+                className={cn(
+                  `col-span-4 lg:col-span-${colsSpanClasses[size!]}`,
+                  {
+                    'md:col-span-2': size !== 'full'
+                  }
+                )}
                 key={index}
               >
                 <RichText content={richText} enableGutter={false} />

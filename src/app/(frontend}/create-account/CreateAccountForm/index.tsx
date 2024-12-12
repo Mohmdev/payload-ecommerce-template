@@ -28,7 +28,7 @@ export const CreateAccountForm: React.FC = () => {
     formState: { errors },
     handleSubmit,
     register,
-    watch,
+    watch
   } = useForm<FormData>()
 
   const password = useRef({})
@@ -36,16 +36,20 @@ export const CreateAccountForm: React.FC = () => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`, {
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`,
+        {
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      )
 
       if (!response.ok) {
-        const message = response.statusText || 'There was an error creating the account.'
+        const message =
+          response.statusText || 'There was an error creating the account.'
         setError(message)
         return
       }
@@ -60,28 +64,41 @@ export const CreateAccountForm: React.FC = () => {
         await login(data)
         clearTimeout(timer)
         if (redirect) router.push(redirect)
-        else router.push(`/account?success=${encodeURIComponent('Account created successfully')}`)
+        else
+          router.push(
+            `/account?success=${encodeURIComponent('Account created successfully')}`
+          )
       } catch (_) {
         clearTimeout(timer)
-        setError('There was an error with the credentials provided. Please try again.')
+        setError(
+          'There was an error with the credentials provided. Please try again.'
+        )
       }
     },
-    [login, router, searchParams],
+    [login, router, searchParams]
   )
 
   return (
     <form className="max-w-lg py-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="prose dark:prose-invert mb-6">
+      <div className="prose mb-6 dark:prose-invert">
         <p>
           {`This is where new customers can signup and create a new account. To manage all users, `}
-          <Link href="/admin/collections/users">login to the admin dashboard</Link>.
+          <Link href="/admin/collections/users">
+            login to the admin dashboard
+          </Link>
+          .
         </p>
       </div>
       <Message className="classes.message" error={error} />
 
       <div className="mb-4">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" {...register('email', { required: true })} required type="email" />
+        <Input
+          id="email"
+          {...register('email', { required: true })}
+          required
+          type="email"
+        />
       </div>
 
       <div className="mb-4">
@@ -100,7 +117,8 @@ export const CreateAccountForm: React.FC = () => {
           id="passwordConfirm"
           {...register('passwordConfirm', {
             required: true,
-            validate: (value) => value === password.current || 'The passwords do not match',
+            validate: (value) =>
+              value === password.current || 'The passwords do not match'
           })}
           required
           type="password"
@@ -110,7 +128,7 @@ export const CreateAccountForm: React.FC = () => {
         {loading ? 'Processing' : 'Create Account'}
       </Button>
 
-      <div className="prose dark:prose-invert mt-8">
+      <div className="prose mt-8 dark:prose-invert">
         <p>
           {'Already have an account? '}
           <Link href={`/login${allParams}`}>Login</Link>

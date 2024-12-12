@@ -13,8 +13,8 @@ import { AccountForm } from './AccountForm'
 export default async function Account() {
   const { user } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
-      'You must be logged in to access your account.',
-    )}&redirect=${encodeURIComponent('/account')}`,
+      'You must be logged in to access your account.'
+    )}&redirect=${encodeURIComponent('/account')}`
   })
 
   return (
@@ -38,14 +38,14 @@ export default async function Account() {
                     mode: 'normal',
                     style: '',
                     text: 'Account',
-                    version: 1,
-                  },
+                    version: 1
+                  }
                 ],
                 direction: 'ltr',
                 format: '',
                 indent: 0,
                 tag: 'h1',
-                version: 1,
+                version: 1
               },
               {
                 type: 'paragraph',
@@ -57,7 +57,7 @@ export default async function Account() {
                     mode: 'normal',
                     style: '',
                     text: 'This is your account dashboard. Here you can update your account information, view your purchased products, and browse your order history. To manage all users, ',
-                    version: 1,
+                    version: 1
                   },
                   {
                     id: '667b3cdc87e3d17ac1b11ece',
@@ -70,18 +70,18 @@ export default async function Account() {
                         mode: 'normal',
                         style: '',
                         text: 'login to the admin dashboard',
-                        version: 1,
-                      },
+                        version: 1
+                      }
                     ],
                     direction: 'ltr',
                     fields: {
                       linkType: 'custom',
                       newTab: false,
-                      url: '/admin/collections/users',
+                      url: '/admin/collections/users'
                     },
                     format: '',
                     indent: 0,
-                    version: 3,
+                    version: 3
                   },
                   {
                     type: 'text',
@@ -90,21 +90,21 @@ export default async function Account() {
                     mode: 'normal',
                     style: '',
                     text: '.',
-                    version: 1,
-                  },
+                    version: 1
+                  }
                 ],
                 direction: 'ltr',
                 format: '',
                 indent: 0,
                 textFormat: 0,
-                version: 1,
-              },
+                version: 1
+              }
             ],
             direction: 'ltr',
             format: '',
             indent: 0,
-            version: 1,
-          },
+            version: 1
+          }
         }}
         type="lowImpact"
       />
@@ -112,17 +112,18 @@ export default async function Account() {
         <AccountForm />
 
         <hr className="my-16" />
-        <div className="prose dark:prose-invert mb-8">
+        <div className="prose mb-8 dark:prose-invert">
           <h2>Orders</h2>
           <p>
-            These are the orders you have placed over time. Each order is associated with an payment
-            intent. As you place more orders, they will appear in your orders list.
+            These are the orders you have placed over time. Each order is
+            associated with an payment intent. As you place more orders, they
+            will appear in your orders list.
           </p>
         </div>
         <Button asChild variant="default">
           <Link href="/orders">View orders</Link>
         </Button>
-        <hr className="mt-16 mb-8" />
+        <hr className="mb-8 mt-16" />
         <Button asChild variant="outline">
           <Link href="/logout">Log out</Link>
         </Button>
@@ -135,7 +136,7 @@ export const metadata: Metadata = {
   description: 'Create an account or log in to your existing account.',
   openGraph: mergeOpenGraph({
     title: 'Account',
-    url: '/account',
+    url: '/account'
   }),
-  title: 'Account',
+  title: 'Account'
 }

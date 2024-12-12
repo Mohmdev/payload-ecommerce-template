@@ -13,8 +13,8 @@ import React from 'react'
 export default async function Orders() {
   const { token } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
-      'You must be logged in to view your orders.',
-    )}&redirect=${encodeURIComponent('/orders')}`,
+      'You must be logged in to view your orders.'
+    )}&redirect=${encodeURIComponent('/orders')}`
   })
 
   let orders: Order[] | null = null
@@ -24,8 +24,8 @@ export default async function Orders() {
       cache: 'no-store',
       headers: {
         Authorization: `JWT ${token}`,
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     })
       ?.then(async (res) => {
         if (!res.ok) notFound()
@@ -44,7 +44,7 @@ export default async function Orders() {
 
   return (
     <div className="container my-16">
-      <div className="prose dark:prose-invert mb-12">
+      <div className="prose mb-12 dark:prose-invert">
         <h1>Orders</h1>
         {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
           <p className="">You have no orders.</p>
@@ -56,25 +56,28 @@ export default async function Orders() {
           {orders?.map((order, index) => (
             <li className="" key={order.id}>
               <div className="">
-                <div className="flex gap-4 align-end mb-6" />
+                <div className="align-end mb-6 flex gap-4" />
                 <div className="mb-6">
                   <Link className="mb-4" href={`/orders/${order.id}`}>
                     <h4 className="text-xl">{`Order #${order.id}`}</h4>
                   </Link>
 
                   <p className="mb-4 opacity-75">
-                    <time dateTime={order.createdAt}>{formatDateTime(order.createdAt)}</time>
+                    <time dateTime={order.createdAt}>
+                      {formatDateTime(order.createdAt)}
+                    </time>
                   </p>
                   {order.items?.length && (
                     <p className="mb-4">
-                      {order.items.length} {order.items.length > 1 ? 'items' : 'item'}
+                      {order.items.length}{' '}
+                      {order.items.length > 1 ? 'items' : 'item'}
                     </p>
                   )}
                   <p>
                     {'Total: '}
                     {new Intl.NumberFormat('en-US', {
                       currency: order.currency,
-                      style: 'currency',
+                      style: 'currency'
                     }).format(order.total / 100)}
                   </p>
                 </div>
@@ -87,7 +90,7 @@ export default async function Orders() {
           ))}
         </ul>
       )}
-      <hr className="mt-6 mb-16" />
+      <hr className="mb-16 mt-6" />
       <Button asChild variant="default">
         <Link href="/account">Go to account</Link>
       </Button>
@@ -99,7 +102,7 @@ export const metadata: Metadata = {
   description: 'Your orders.',
   openGraph: mergeOpenGraph({
     title: 'Orders',
-    url: '/orders',
+    url: '/orders'
   }),
-  title: 'Orders',
+  title: 'Orders'
 }

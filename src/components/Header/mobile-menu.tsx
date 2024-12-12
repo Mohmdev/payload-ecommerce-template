@@ -10,7 +10,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from '@/components/ui/sheet'
 import { useAuth } from '@/providers/Auth'
 import { MenuIcon, XIcon } from 'lucide-react'
@@ -79,7 +79,7 @@ export function MobileMenu({ menu }: Props) {
 
         {user ? (
           <div className="mt-4">
-            <h2 className="text-xl mb-4">My account</h2>
+            <h2 className="mb-4 text-xl">My account</h2>
             <hr className="my-2" />
             <ul className="flex flex-col gap-2">
               <li>
@@ -97,8 +97,8 @@ export function MobileMenu({ menu }: Props) {
           </div>
         ) : (
           <div>
-            <h2 className="text-xl mb-4">My account</h2>
-            <div className="flex items-center gap-2 mt-4">
+            <h2 className="mb-4 text-xl">My account</h2>
+            <div className="mt-4 flex items-center gap-2">
               <Button asChild className="w-full" variant="outline">
                 <Link href="/login">Log in</Link>
               </Button>

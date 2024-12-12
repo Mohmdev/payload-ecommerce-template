@@ -101,6 +101,8 @@ export const importMap = {
     SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   '@payloadcms/richtext-lexical/client#StrikethroughFeatureClient':
     StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  '@/components/BeforeDashboard#BeforeDashboard': BeforeDashboard_1a7510af427896d367a49dbf838d2de6,
-  '@/components/BeforeLogin#BeforeLogin': BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  '@/components/BeforeDashboard#BeforeDashboard':
+    BeforeDashboard_1a7510af427896d367a49dbf838d2de6,
+  '@/components/BeforeLogin#BeforeLogin':
+    BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e
 }
