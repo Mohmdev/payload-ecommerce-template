@@ -4,7 +4,7 @@ import type { Media as MediaType } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { GridTileImage } from '@/components/grid/tile'
-import { createUrl } from '@/utilities/createUrl'
+import { createUrl } from '@/lib/utilities/createUrl'
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'

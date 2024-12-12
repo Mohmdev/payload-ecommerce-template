@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import React from 'react'
 
 import { RecoverPasswordForm } from './RecoverPasswordForm'

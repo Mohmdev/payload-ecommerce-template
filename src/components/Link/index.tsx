@@ -1,7 +1,7 @@
 import type { Page, Product } from '@/payload-types'
 
 import { Button, type ButtonProps } from '@/components/ui/button'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/lib/utilities/cn'
 import Link from 'next/link'
 import React from 'react'
 

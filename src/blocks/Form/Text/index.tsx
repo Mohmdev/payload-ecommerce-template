@@ -20,11 +20,9 @@ export const Text: React.FC<
       }>
     >
     register: UseFormRegister<FieldValues>
-    type?: 'password' | 'text'
   }
 > = ({
   name,
-  type = 'text',
   defaultValue,
   errors,
   label,
@@ -38,7 +36,7 @@ export const Text: React.FC<
       <Input
         defaultValue={defaultValue}
         id={name}
-        type={type}
+        type="text"
         {...register(name, { required: requiredFromProps })}
       />
       {requiredFromProps && errors[name] && <Error />}

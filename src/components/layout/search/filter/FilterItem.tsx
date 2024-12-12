@@ -2,7 +2,7 @@
 
 import type { SortFilterItem as SortFilterItemType } from '@/lib/constants'
 
-import { createUrl } from '@/utilities/createUrl'
+import { createUrl } from '@/lib/utilities/createUrl'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'

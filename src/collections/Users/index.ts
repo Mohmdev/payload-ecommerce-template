@@ -1,10 +1,10 @@
 import type { User } from '@/payload-types'
 import type { CollectionConfig } from 'payload'
 
-import { admins } from '@/access/admins'
-import { anyone } from '@/access/anyone'
-import { adminsAndUser } from '@/access/adminsAndUser'
-import { checkRole } from '@/access/checkRole'
+import { admins } from '@/lib/access/admins'
+import { anyone } from '@/lib/access/anyone'
+import { adminsAndUser } from '@/lib/access/adminsAndUser'
+import { checkRole } from '@/lib/access/checkRole'
 
 import { customerProxy } from './endpoints/customer'
 import { createStripeCustomer } from './hooks/createStripeCustomer'

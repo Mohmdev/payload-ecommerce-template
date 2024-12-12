@@ -3,7 +3,7 @@
 import type { Product } from '@/payload-types'
 import type { InfoType } from '@/collections/Products/ui/types'
 
-import { createUrl } from '@/utilities/createUrl'
+import { createUrl } from '@/lib/utilities/createUrl'
 import clsx from 'clsx'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'

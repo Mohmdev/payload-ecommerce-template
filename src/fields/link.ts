@@ -1,8 +1,11 @@
 import type { Field } from 'payload'
 
-import { deepMerge } from '@/utilities/deepMerge'
+import deepMerge from '@/lib/utilities/deepMerge'
 
-export type LinkAppearances = 'default' | 'outline'
+import type { ButtonProps } from '@/components/ui/button'
+type ButtonVariants = NonNullable<ButtonProps['variant']>
+
+export type LinkAppearances = 'default' | 'outline' | ButtonVariants
 
 export const appearanceOptions: Record<
   LinkAppearances,
@@ -15,6 +18,22 @@ export const appearanceOptions: Record<
   outline: {
     label: 'Outline',
     value: 'outline'
+  },
+  secondary: {
+    label: 'Secondary',
+    value: 'secondary'
+  },
+  destructive: {
+    label: 'Destructive',
+    value: 'destructive'
+  },
+  ghost: {
+    label: 'Ghost',
+    value: 'ghost'
+  },
+  link: {
+    label: 'Link',
+    value: 'link'
   }
 }
 
@@ -82,7 +101,6 @@ export const link: LinkType = ({
         condition: (_, siblingData) => siblingData?.type === 'reference'
       },
       label: 'Document to link to',
-      maxDepth: 1,
       relationTo: ['pages'],
       required: true
     },
@@ -126,10 +144,7 @@ export const link: LinkType = ({
   }
 
   if (appearances !== false) {
-    let appearanceOptionsToUse = [
-      appearanceOptions.default,
-      appearanceOptions.outline
-    ]
+    let appearanceOptionsToUse = Object.values(appearanceOptions)
 
     if (appearances) {
       appearanceOptionsToUse = appearances.map(

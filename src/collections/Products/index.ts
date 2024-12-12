@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -11,16 +11,17 @@ import {
 
 import type { ProductVariant } from './ui/types'
 
-import { admins } from '@/access/admins'
+import { admins } from '@/lib/access/admins'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
-import { slugField } from '@/fields/slug'
-import { adminsOrPublished } from '@/access/adminsOrPublished'
+import { slugField } from '@/fields/slug/config'
+import { adminsOrPublished } from '@/lib/access/adminsOrPublished'
 
 import { beforeProductChange } from './hooks/beforeChange'
 import { deleteProductFromCarts } from './hooks/deleteProductFromCarts'
 import { revalidateProduct } from './hooks/revalidateProduct'
+import type { Product } from '@/payload-types'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -32,18 +33,22 @@ export const Products: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'stripeProductID', '_status'],
-
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data, req }) => {
         const path = generatePreviewPath({
-          path: `/product/${typeof data?.slug === 'string' ? data.slug : ''}`
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'pages',
+          req
         })
-        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+
+        return path
       }
     },
-    preview: (doc) =>
+    preview: (data, { req }) =>
       generatePreviewPath({
-        path: `/product/${typeof doc?.slug === 'string' ? doc.slug : ''}`
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'pages',
+        req
       }),
     useAsTitle: 'title'
   },
@@ -257,11 +262,15 @@ export const Products: CollectionConfig = {
                     singular: 'Variant'
                   },
                   minRows: 1,
-                  validate: (value, { siblingData }) => {
-                    if (siblingData.variants.length) {
+                  validate: (
+                    value,
+                    { siblingData }: { siblingData: Product['variants'] }
+                  ) => {
+                    if (siblingData?.variants?.length) {
                       const hasDuplicate = siblingData.variants.some(
                         (variant: ProductVariant, index) => {
                           // Check this against other variants
+                          // TODO: This part has issues
                           const dedupedArray = [...siblingData.variants].filter(
                             (_, i) => i !== index
                           )
@@ -365,7 +374,7 @@ export const Products: CollectionConfig = {
       hasMany: true,
       relationTo: 'products'
     },
-    slugField(),
+    ...slugField(),
     {
       name: 'skipSync',
       type: 'checkbox',

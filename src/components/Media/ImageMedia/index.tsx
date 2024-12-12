@@ -1,7 +1,7 @@
 'use client'
 
 import { cssVariables } from '@/cssVariables'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/lib/utilities/cn'
 import NextImage from 'next/image'
 import React from 'react'
 

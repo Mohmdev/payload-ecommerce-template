@@ -2,7 +2,7 @@ import type { PayloadHandler, PayloadRequest } from 'payload'
 
 import Stripe from 'stripe'
 
-import { checkRole } from '@/access/checkRole'
+import { checkRole } from '@/lib/access/checkRole'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2022-08-01'

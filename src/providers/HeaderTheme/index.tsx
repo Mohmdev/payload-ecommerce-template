@@ -10,7 +10,7 @@ import React, {
   useState
 } from 'react'
 
-import { canUseDOM } from '@/utilities/canUseDOM'
+import { canUseDOM } from '@/lib/utilities/canUseDOM'
 
 export interface ContextType {
   headerTheme?: Theme | null

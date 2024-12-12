@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
+import { RenderHero } from '@/fields/heros/RenderHero'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
-import { generateMeta } from '@/utilities/generateMeta'
+import { generateMeta } from '@/lib/utilities/generateMeta'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode, headers } from 'next/headers'

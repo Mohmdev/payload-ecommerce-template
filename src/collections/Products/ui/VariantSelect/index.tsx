@@ -2,7 +2,7 @@
 import type { Product } from '@/payload-types'
 import type { TextFieldClientProps } from 'payload'
 
-import { toKebabCase } from '@/utilities/toKebabCase'
+import { toKebabCase } from '@/lib/utilities/toKebabCase'
 import { getTranslation } from '@payloadcms/translations'
 import {
   useField,

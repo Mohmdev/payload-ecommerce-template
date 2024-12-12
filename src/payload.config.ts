@@ -1,7 +1,8 @@
 import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
 
 import { Page, Product } from '@/payload-types'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+// import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
@@ -17,28 +18,29 @@ import {
   lexicalEditor
 } from '@payloadcms/richtext-lexical'
 import { DocumentInfoContext } from '@payloadcms/ui'
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload'
 // import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
-import { Categories } from '@/collections/Categories'
-import { Media } from '@/collections/Media'
+import { Categories } from '@/collections/Categories/config'
+import { Media } from '@/collections/Media/config'
 import { Orders } from '@/collections/Orders'
-import { Pages } from '@/collections/Pages'
+import { Pages } from '@/collections/Pages/config'
 import { Products } from '@/collections/Products'
 import { Users } from '@/collections/Users'
 import { BeforeDashboard } from '@/components/BeforeDashboard'
 import { BeforeLogin } from '@/components/BeforeLogin'
-import { createPaymentIntent } from '@/endpoints/create-payment-intent'
-import { customersProxy } from '@/endpoints/customers'
-import { productsProxy } from '@/endpoints/products'
-import { seed } from '@/endpoints/seed'
+import { createPaymentIntent } from '@/lib/endpoints/create-payment-intent'
+import { customersProxy } from '@/lib/endpoints/customers'
+import { productsProxy } from '@/lib/endpoints/products'
+import { seed } from '@/lib/endpoints/seed'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
-import { paymentSucceeded } from '@/stripe/webhooks/paymentSucceeded'
-import { productUpdated } from '@/stripe/webhooks/productUpdated'
+import { paymentSucceeded } from '@/lib/stripe/webhooks/paymentSucceeded'
+import { productUpdated } from '@/lib/stripe/webhooks/productUpdated'
+import { Posts } from './collections/Posts/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,6 +55,18 @@ const generateTitle: GenerateTitle = <Page>({ doc }) => {
 }
 
 export default buildConfig({
+  globals: [Header, Footer],
+  collections: [
+    Products,
+    Orders,
+    // Content
+    Pages,
+    Posts,
+    Categories,
+    Media,
+    // Settings
+    Users
+  ],
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
@@ -64,9 +78,13 @@ export default buildConfig({
     },
     user: Users.slug
   },
-  collections: [Users, Products, Pages, Categories, Media, Orders],
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || ''
+
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URI
+    },
+    migrationDir: './src/lib/migrations'
+    // prodMigrations: migrations,
   }),
   editor: lexicalEditor({
     features: () => {
@@ -125,7 +143,7 @@ export default buildConfig({
       path: '/seed',
     }, */
   ],
-  globals: [Footer, Header],
+
   plugins: [
     stripePlugin({
       isTestKey: Boolean(process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY),
