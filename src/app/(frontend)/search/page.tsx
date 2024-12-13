@@ -10,13 +10,15 @@ export const metadata = {
 }
 
 export default async function SearchPage({
-  searchParams
+  searchParams: searchParamsPromise
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const { q: searchValue, sort } = searchParams as { [key: string]: string }
-  const payload = await getPayload({ config: configPromise })
+  const { q: searchValue, sort } = (await searchParamsPromise) as {
+    [key: string]: string | string[] | undefined
+  }
 
+  const payload = await getPayload({ config: configPromise })
   const products = await payload.find({
     collection: 'products',
     ...(sort ? { sort } : { sort: 'title' }),

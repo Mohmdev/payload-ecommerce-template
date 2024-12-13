@@ -7,25 +7,30 @@ import { ProductDescription } from '@/components/product/ProductDescription'
 import { HIDDEN_PRODUCT_TAG } from '@/lib/constants'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import { draftMode, headers } from 'next/headers'
+import { draftMode, headers as getHeaders } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import React, { Suspense } from 'react'
+import React, { cache, Suspense } from 'react'
 import PageClient from './page.client'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 
-export default async function ProductPage({
-  params
-}: {
-  params: { slug: string }
-}) {
-  const product = await queryProductBySlug({ slug: params.slug })
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
 
-  if (!product) return notFound()
+export default async function ProductPage({ params: paramsPromise }: Args) {
+  const { slug = '' } = await paramsPromise
+  const url = '/product/' + slug
+  const product = await queryProductBySlug({ slug })
+
+  if (!product) return <PayloadRedirects url={url} />
 
   const variants = product.enableVariants ? product.variants?.variants : []
 
   const metaImage =
-    typeof product.meta?.image !== 'string' ? product.meta?.image : undefined
+    typeof product.meta?.image !== 'number' ? product.meta?.image : undefined
   const hasStock = product.enableVariants
     ? variants?.some((variant) => variant?.stock > 0)
     : product.stock! > 0
@@ -49,7 +54,7 @@ export default async function ProductPage({
 
   const relatedProducts =
     product.relatedProducts?.filter(
-      (relatedProduct) => typeof relatedProduct !== 'string'
+      (relatedProduct) => typeof relatedProduct !== 'number'
     ) ?? []
 
   const gallery = product.gallery
@@ -138,15 +143,13 @@ function RelatedProducts({ products }: { products: Product[] }) {
   )
 }
 
-const queryProductBySlug = async ({ slug }: { slug: string }) => {
+const queryProductBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
+
   const payload = await getPayload({ config: configPromise })
 
-  const authResult = draft
-    ? // @ts-expect-error
-      await payload.auth({ headers: headers() })
-    : undefined
-
+  const headers = await getHeaders()
+  const authResult = draft ? await payload.auth({ headers }) : undefined
   const user = authResult?.user
 
   const result = await payload.find({
@@ -164,42 +167,43 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
-}
+})
 
-/* export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string }
-}): Promise<Metadata> {
-  const product = await queryProductBySlug(params.handle)
+/* ------------------------------------ / ----------------------------------- */
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { handle: string }
+// }): Promise<Metadata> {
+//   const product = await queryProductBySlug(params.handle)
 
-  if (!product) return notFound()
+//   if (!product) return notFound()
 
-  const { altText: alt, height, url, width } = product.featuredImage || {}
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
+//   const { altText: alt, height, url, width } = product.featuredImage || {}
+//   const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
 
-  return {
-    description: product.seo.description || product.description,
-    openGraph: url
-      ? {
-          images: [
-            {
-              alt,
-              height,
-              url,
-              width,
-            },
-          ],
-        }
-      : null,
-    robots: {
-      follow: indexable,
-      googleBot: {
-        follow: indexable,
-        index: indexable,
-      },
-      index: indexable,
-    },
-    title: product.seo.title || product.title,
-  }
-} */
+//   return {
+//     description: product.seo.description || product.description,
+//     openGraph: url
+//       ? {
+//           images: [
+//             {
+//               alt,
+//               height,
+//               url,
+//               width,
+//             },
+//           ],
+//         }
+//       : null,
+//     robots: {
+//       follow: indexable,
+//       googleBot: {
+//         follow: indexable,
+//         index: indexable,
+//       },
+//       index: indexable,
+//     },
+//     title: product.seo.title || product.title,
+//   }
+// }

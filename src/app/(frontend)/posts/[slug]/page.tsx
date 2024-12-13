@@ -4,7 +4,7 @@ import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import { draftMode, headers as getHeaders } from 'next/headers.js'
+import { draftMode, headers as getHeaders } from 'next/headers'
 import React, { cache } from 'react'
 
 import type { Post } from '@/payload-types'
@@ -94,16 +94,15 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 
   const payload = await getPayload({ config: configPromise })
 
-  const authResult = draft
-    ? await payload.auth({
-        headers: await getHeaders()
-      })
-    : undefined
+  const headers = await getHeaders()
+  const authResult = draft ? await payload.auth({ headers }) : undefined
+
   const user = authResult?.user
 
   const result = await payload.find({
     collection: 'posts',
     draft,
+    user,
     limit: 1,
     overrideAccess: draft,
     pagination: false,

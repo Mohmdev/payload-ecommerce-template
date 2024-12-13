@@ -10,17 +10,19 @@ export const metadata = {
 }
 
 export default async function SearchCategoryPage({
-  params,
-  searchParams
+  params: paramsPromise,
+  searchParams: searchParamsPromise
 }: {
-  params: { category: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+  params: Promise<{ category: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const { q: searchValue, sort } = searchParams as { [key: string]: string }
-  const { category } = params
-  const payload = await getPayload({ config: configPromise })
+  const { q: searchValue, sort } = (await searchParamsPromise) as {
+    [key: string]: string | string[] | undefined
+  }
+  const { category } = await paramsPromise
 
   // Get the category id so we can search for products that belong to this category
+  const payload = await getPayload({ config: configPromise })
   const categoryDoc = (
     await payload.find({
       collection: 'categories',
