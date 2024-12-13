@@ -865,8 +865,8 @@ export interface Search {
   title?: string | null;
   priority?: number | null;
   doc: {
-    relationTo: 'posts';
-    value: number | Post;
+    relationTo: 'products';
+    value: number | Product;
   };
   slug?: string | null;
   meta?: {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -25,20 +26,9 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: {
-        '2xl': '2rem',
-        DEFAULT: '1rem',
-        lg: '2rem',
-        md: '2rem',
-        sm: '1rem',
-        xl: '2rem'
-      },
+      padding: '1.5rem',
       screens: {
-        '2xl': '86rem',
-        lg: '64rem',
-        md: '48rem',
-        sm: '40rem',
-        xl: '80rem'
+        '2xl': '96rem' // 1536px
       }
     },
     extend: {

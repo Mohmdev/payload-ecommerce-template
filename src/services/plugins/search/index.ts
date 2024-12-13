@@ -5,7 +5,7 @@ import { searchFields } from './fields/fieldOverrides'
 import type { Plugin } from 'payload'
 
 export const searchPluginConfig: Plugin = searchPlugin({
-  collections: ['posts'],
+  collections: ['products'],
   beforeSync: beforeSyncWithSearch,
   searchOverrides: {
     fields: ({ defaultFields }) => {

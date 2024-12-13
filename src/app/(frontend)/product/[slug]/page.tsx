@@ -57,18 +57,41 @@ export default async function ProductPage({ params: paramsPromise }: Args) {
       (relatedProduct) => typeof relatedProduct !== 'number'
     ) ?? []
 
-  const gallery = product.gallery
-    ?.filter((item): item is Media => typeof item === 'object')
-    .map((item) => item) as Media[]
+  // const gallery = product.gallery
+  //   ?.filter((item): item is Media => typeof item === 'object')
+  //   .map((item) => item) as Media[]
 
+  // if (variants?.length) {
+  //   variants.forEach((variant) => {
+  //     if (variant?.images?.length) {
+  //       variant.images.forEach((item) => {
+  //         if (typeof item === 'object') {
+  //           gallery?.push(item)
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+  const gallery: Media[] = []
+
+  // Add main product gallery images
+  if (product.gallery) {
+    const mainGalleryImages = product.gallery.filter(
+      (item): item is Media =>
+        typeof item === 'object' && item !== null && 'url' in item
+    )
+    gallery.push(...mainGalleryImages)
+  }
+
+  // Add variant images
   if (variants?.length) {
     variants.forEach((variant) => {
       if (variant?.images?.length) {
-        variant.images.forEach((item) => {
-          if (typeof item === 'object') {
-            gallery?.push(item)
-          }
-        })
+        const variantImages = variant.images.filter(
+          (item): item is Media =>
+            typeof item === 'object' && item !== null && 'url' in item
+        )
+        gallery.push(...variantImages)
       }
     })
   }

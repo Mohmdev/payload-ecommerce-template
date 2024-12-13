@@ -1,5 +1,5 @@
 {
-  "id": "31ecc8b4-5c6a-4f44-a39c-45fcde9a24b6",
+  "id": "23a74be0-7bcc-4837-932a-e014eb67ccb6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -9757,8 +9757,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "posts_id": {
-          "name": "posts_id",
+        "products_id": {
+          "name": "products_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -9810,11 +9810,11 @@
           "method": "btree",
           "with": {}
         },
-        "search_rels_posts_id_idx": {
-          "name": "search_rels_posts_id_idx",
+        "search_rels_products_id_idx": {
+          "name": "search_rels_products_id_idx",
           "columns": [
             {
-              "expression": "posts_id",
+              "expression": "products_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -9840,12 +9840,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "search_rels_posts_fk": {
-          "name": "search_rels_posts_fk",
+        "search_rels_products_fk": {
+          "name": "search_rels_products_fk",
           "tableFrom": "search_rels",
-          "tableTo": "posts",
+          "tableTo": "products",
           "columnsFrom": [
-            "posts_id"
+            "products_id"
           ],
           "columnsTo": [
             "id"

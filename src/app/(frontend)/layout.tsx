@@ -1,6 +1,4 @@
 import type { ReactNode } from 'react'
-
-import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -26,12 +24,19 @@ export default async function RootLayout({
       </head>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         <Providers>
-          <AdminBar />
           <LivePreviewListener />
-
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <div
+            style={{
+              minHeight: '100dvh',
+              display: 'grid',
+              gridTemplateRows: 'auto 1fr auto'
+            }}
+            className="min-h-[100vh]" // fallback
+          >
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

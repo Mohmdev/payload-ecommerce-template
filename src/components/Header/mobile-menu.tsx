@@ -13,10 +13,9 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { useAuth } from '@/providers/Auth'
-import { MenuIcon, XIcon } from 'lucide-react'
+import { MenuIcon } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect } from 'react'
 
 import { Search, SearchSkeleton } from './search'
 
@@ -27,30 +26,32 @@ interface Props {
 export function MobileMenu({ menu }: Props) {
   const { user } = useAuth()
 
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const [isOpen, setIsOpen] = useState(false)
+  // useEffect(() => {
+  //   const mediaQuery = window.matchMedia('(min-width: 768px)')
+  //   const handleChange = (e: MediaQueryListEvent) => {
+  //     if (e.matches) {
+  //       document.body.style.pointerEvents = 'none'
+  //       const closeButton = document.querySelector(
+  //         '[aria-label="Close"]'
+  //       ) as HTMLButtonElement
+  //       if (closeButton) closeButton.click()
+  //       document.body.style.pointerEvents = 'auto'
+  //     }
+  //   }
 
-  const closeMobileMenu = () => setIsOpen(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsOpen(false)
-      }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [isOpen])
-
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname, searchParams])
+  //   mediaQuery.addEventListener('change', handleChange)
+  //   return () => mediaQuery.removeEventListener('change', handleChange)
+  // }, [])
 
   return (
-    <Sheet onOpenChange={setIsOpen} open={isOpen}>
-      <SheetTrigger className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:bg-black dark:text-white">
-        <MenuIcon className="h-4" />
+    <Sheet modal={false}>
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          className="relative flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:bg-black dark:text-white"
+        >
+          <MenuIcon className="h-4" />
+        </Button>
       </SheetTrigger>
 
       <SheetContent side="left">
