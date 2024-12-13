@@ -1,13 +1,12 @@
-import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
-// import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-
-import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
-import { fileURLToPath } from 'url'
-import { plugins } from './services/plugins'
+import { defaultEndpoints } from '@/services/endpoints'
+import { emailConfig } from '@/services/email/config'
+import { adminConfig } from '@/services/admin/config'
+import { typescriptConfig } from '@/services/typescript/config'
+import { databaseAdapter } from '@/services/database/config'
+import { defaultLexical } from '@/services/editor/defaultLexical'
+import { plugins } from '@/services/plugins'
 import { Categories } from '@/collections/Categories/config'
 import { Media } from '@/collections/Media/config'
 import { Orders } from '@/collections/Orders'
@@ -16,13 +15,8 @@ import { Products } from '@/collections/Products/config'
 import { Users } from '@/collections/Users/config'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
-import { Posts } from './collections/Posts/config'
-import { getServerSideURL } from './lib/utilities/getURL'
-import { defaultLexical } from './services/editor/defaultLexical'
-import { defaultEndpoints } from './services/endpoints'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+import { Posts } from '@/collections/Posts/config'
+import { getServerSideURL } from '@/lib/utilities/getURL'
 
 export default buildConfig({
   globals: [Header, Footer],
@@ -37,54 +31,14 @@ export default buildConfig({
     // Settings
     Users
   ],
-  admin: {
-    components: {
-      beforeLogin: ['@/components/BeforeLogin'],
-      beforeDashboard: ['@/components/BeforeDashboard']
-    },
-    importMap: {
-      baseDir: path.resolve(dirname)
-    },
-    user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900
-        }
-      ]
-    }
-  },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URI
-    },
-    migrationDir: './src/lib/migrations'
-    // prodMigrations: migrations,
-  }),
+  admin: adminConfig,
+  db: databaseAdapter,
   editor: defaultLexical,
-  email: nodemailerAdapter(),
+  email: emailConfig,
   endpoints: defaultEndpoints,
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [...plugins],
   secret: process.env.PAYLOAD_SECRET,
-  // TODO: Fix why this is not working
-  // sharp,
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts')
-  }
+  typescript: typescriptConfig,
+  sharp,
 })
