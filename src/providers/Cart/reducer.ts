@@ -54,7 +54,7 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
           ({ id }) =>
             /* typeof product === 'string' ? product === productId : product?.id === productId, */
             id === productId
-        ) // eslint-disable-line function-paren-newline
+        )
 
         if (indexInAcc > -1) {
           acc[indexInAcc] = {
@@ -175,7 +175,7 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
       const { payload: itemId } = action
       const withDeletedItem = { ...cart }
 
-      const indexInCart = cart?.items?.findIndex(({ id }) => id === itemId) // eslint-disable-line function-paren-newline
+      const indexInCart = cart?.items?.findIndex(({ id }) => id === itemId)
 
       if (
         typeof indexInCart === 'number' &&

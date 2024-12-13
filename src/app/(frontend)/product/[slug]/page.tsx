@@ -157,7 +157,9 @@ const queryProductBySlug = cache(async ({ slug }: { slug: string }) => {
     depth: 2,
     draft,
     limit: 1,
-    overrideAccess: false,
+    // TODO: override access for now but find a fix for it
+    // It's needed since we're accessing depth 2
+    overrideAccess: true,
     user,
     where: {
       slug: {

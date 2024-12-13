@@ -213,7 +213,7 @@ export const CartProvider = (props) => {
 
         void syncCartToPayload()
       } catch (e) {
-        console.error('Error while syncing cart to Payload.') // eslint-disable-line no-console
+        console.error('Error while syncing cart to Payload.')
       }
     } else {
       localStorage.setItem('cart', JSON.stringify(cart))
@@ -238,7 +238,7 @@ export const CartProvider = (props) => {
                 ? product === incomingProduct.id
                 : (product as Product).id === incomingProduct.id
             }
-          }) // eslint-disable-line function-paren-newline
+          })
         )
       }
       return isInCart

@@ -33,7 +33,7 @@ export function GridTileImage({
       )}
     >
       {props.media ? (
-        // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
+        // `alt` is inherited from `props`, which is being enforced with TypeScript
         <MediaComponent
           className={clsx('relative h-full w-full object-cover', {
             'transition duration-300 ease-in-out group-hover:scale-105':

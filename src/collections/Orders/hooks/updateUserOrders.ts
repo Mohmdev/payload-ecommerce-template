@@ -34,7 +34,7 @@ export const updateUserOrders: CollectionAfterChangeHook<Order> = async ({
           orders: [
             ...(user?.orders?.map((order) =>
               typeof order === 'object' ? order.id : order
-            ) || []), // eslint-disable-line function-paren-newline
+            ) || []),
             doc.id
           ]
         },
