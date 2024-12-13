@@ -5,7 +5,9 @@ import {
   lexicalEditor
 } from '@payloadcms/richtext-lexical'
 
-export const formBuilderPluginConfig = formBuilderPlugin({
+import type { Plugin } from 'payload'
+
+export const formBuilderPluginConfig: Plugin = formBuilderPlugin({
   fields: {
     payment: false
   },

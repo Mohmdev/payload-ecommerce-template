@@ -1,7 +1,9 @@
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { revalidateRedirects } from '@/lib/hooks/revalidateRedirects'
 
-export const redirectsPluginConfig = redirectsPlugin({
+import type { Plugin } from 'payload'
+
+export const redirectsPluginConfig: Plugin = redirectsPlugin({
   collections: ['pages', 'posts'],
   overrides: {
     // @ts-expect-error

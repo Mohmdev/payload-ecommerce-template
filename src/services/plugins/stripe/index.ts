@@ -1,8 +1,10 @@
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { paymentSucceeded } from '@/services/stripe/webhooks/paymentSucceeded'
-import { productUpdated } from '@/services/stripe/webhooks/productUpdated'
+import { paymentSucceeded } from './webhooks/paymentSucceeded'
+import { productUpdated } from './webhooks/productUpdated'
 
-export const stripePluginConfig = stripePlugin({
+import type { Plugin } from 'payload'
+
+export const stripePluginConfig: Plugin = stripePlugin({
   isTestKey: Boolean(process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY),
   logs: true,
   rest: false,

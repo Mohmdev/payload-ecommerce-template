@@ -2,7 +2,9 @@ import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from './hooks/beforeSync'
 import { searchFields } from './fields/fieldOverrides'
 
-export const searchPluginConfig = searchPlugin({
+import type { Plugin } from 'payload'
+
+export const searchPluginConfig: Plugin = searchPlugin({
   collections: ['posts'],
   beforeSync: beforeSyncWithSearch,
   searchOverrides: {

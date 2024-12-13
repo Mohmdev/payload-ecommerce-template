@@ -34,6 +34,7 @@ export default buildConfig({
   admin: adminConfig,
   db: databaseAdapter,
   editor: defaultLexical,
+  // email: emailConfig(),
   email: emailConfig,
   endpoints: defaultEndpoints,
   cors: [getServerSideURL()].filter(Boolean),

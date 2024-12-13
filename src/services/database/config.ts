@@ -1,10 +1,13 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 // import { mongooseAdapter } from '@payloadcms/db-mongodb'
 
-export const databaseAdapter = postgresAdapter({
-  pool: {
-    connectionString: process.env.POSTGRES_URI
-  },
-  // prodMigrations: migrations,
-  migrationDir: '@/services/migrations'
-})
+import type { Config } from 'payload'
+
+export const databaseAdapter: Config['db'] = postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URI
+    },
+    
+    // prodMigrations: migrations,
+    migrationDir: 'src/services/database/migrations'
+  })

@@ -1,6 +1,8 @@
 import { s3Storage } from '@payloadcms/storage-s3'
 
-export const s3StoragePlugin = s3Storage({
+import type { Plugin } from 'payload'
+
+export const s3StoragePlugin: Plugin = s3Storage({
   collections: {
     media: {
       prefix: 'media',
