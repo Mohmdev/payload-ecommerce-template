@@ -9,7 +9,7 @@ export const MediaComponent: React.FC<MediaProps> = (props) => {
   const { className, htmlElement = 'div', resource } = props
 
   const isVideo =
-    typeof resource !== 'string' &&
+    typeof resource !== 'number' &&
     typeof resource === 'object' &&
     resource?.mimeType?.includes('video')
   const Tag = (htmlElement as any) || Fragment

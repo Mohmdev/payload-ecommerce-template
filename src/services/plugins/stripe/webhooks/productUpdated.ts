@@ -25,7 +25,7 @@ export const productUpdated: StripeWebhookHandler<{
       `Syncing Stripe product with ID: ${stripeProductID} to Payload...`
     )
 
-  let payloadProductID: string | null = null,
+  let payloadProductID: number | null = null,
     stripePriceID: string | null = null
   let isVariant = false
   let product: Product | null = null

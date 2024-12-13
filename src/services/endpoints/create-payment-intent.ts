@@ -124,7 +124,7 @@ export const createPaymentIntent: PayloadHandler = async (req) => {
           return null
         }
 
-        if (typeof product === 'string') {
+        if (typeof product === 'number') {
           return null
         }
 

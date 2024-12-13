@@ -58,7 +58,7 @@ const flattenCart = (cart: User['cart']): User['cart'] => ({
 
       if (
         // ensure product is a Product object
-        typeof item.product !== 'string' &&
+        typeof item.product !== 'number' &&
         typeof item.product === 'object'
       ) {
         // if cart item is a variant

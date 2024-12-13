@@ -89,7 +89,7 @@ export function CartModal() {
                   let image =
                     isProduct(product) &&
                     product.meta?.image &&
-                    typeof product.meta.image !== 'string'
+                    typeof product.meta.image !== 'number'
                       ? product.meta.image
                       : undefined
 
