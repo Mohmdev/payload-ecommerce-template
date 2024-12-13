@@ -7,7 +7,10 @@ type Overrides = {
   checkboxOverrides?: Partial<CheckboxField>
 }
 
-type Slug = (fieldToUse?: string, overrides?: Overrides) => [TextField, CheckboxField]
+type Slug = (
+  fieldToUse?: string,
+  overrides?: Overrides
+) => [TextField, CheckboxField]
 
 export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
   const { slugOverrides, checkboxOverrides } = overrides
@@ -18,9 +21,9 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
     defaultValue: true,
     admin: {
       hidden: true,
-      position: 'sidebar',
+      position: 'sidebar'
     },
-    ...checkboxOverrides,
+    ...checkboxOverrides
   }
 
   // Expect ts error here because of typescript mismatching Partial<TextField> with TextField
@@ -34,21 +37,21 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
     ...(slugOverrides || {}),
     hooks: {
       // Kept this in for hook or API based updates
-      beforeValidate: [formatSlugHook(fieldToUse)],
+      beforeValidate: [formatSlugHook(fieldToUse)]
     },
     admin: {
       position: 'sidebar',
       ...(slugOverrides?.admin || {}),
       components: {
         Field: {
-          path: '@/organisms/fields/slug/Component#SlugComponent',
+          path: '@/fields/slug/Component#SlugComponent',
           clientProps: {
             fieldToUse,
-            checkboxFieldPath: checkBoxField.name,
-          },
-        },
-      },
-    },
+            checkboxFieldPath: checkBoxField.name
+          }
+        }
+      }
+    }
   }
 
   return [slugField, checkBoxField]

@@ -23,7 +23,7 @@ const nextConfig = {
       })
     ]
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   redirects
 }
 

@@ -2,7 +2,14 @@
 import React, { useCallback, useEffect } from 'react'
 import { TextFieldClientProps } from 'payload'
 
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
+import {
+  useField,
+  Button,
+  TextInput,
+  FieldLabel,
+  useFormFields,
+  useForm
+} from '@payloadcms/ui'
 
 import { formatSlug } from './formatSlug'
 import './index.scss'
@@ -17,7 +24,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
   fieldToUse,
   checkboxFieldPath: checkboxFieldPathFromProps,
   path,
-  readOnly: readOnlyFromProps,
+  readOnly: readOnlyFromProps
 }) => {
   const { label } = field
 
@@ -41,7 +48,9 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
   })
 
   // Compute formatted slug for placeholder
-  const formattedSlugPreview = targetFieldValue ? formatSlug(targetFieldValue) : ''
+  const formattedSlugPreview = targetFieldValue
+    ? formatSlug(targetFieldValue)
+    : ''
 
   useEffect(() => {
     if (checkboxValue) {
@@ -62,10 +71,10 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
       dispatchFields({
         type: 'UPDATE',
         path: checkboxFieldPath,
-        value: !checkboxValue,
+        value: !checkboxValue
       })
     },
-    [checkboxValue, checkboxFieldPath, dispatchFields],
+    [checkboxValue, checkboxFieldPath, dispatchFields]
   )
 
   const readOnly = readOnlyFromProps || checkboxValue
