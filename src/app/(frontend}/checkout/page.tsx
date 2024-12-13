@@ -4,10 +4,12 @@ import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import React, { Fragment } from 'react'
 
 import { CheckoutPage } from './CheckoutPage'
+import PageClient from './page.client'
 
 export default function Checkout() {
   return (
     <div className="container my-16 min-h-[60vh]">
+      <PageClient />
       {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && (
         <div>
           <Fragment>

@@ -46,7 +46,7 @@ export const CarouselBlock: React.FC<
     products = fetchedProducts.docs
   } else if (selectedDocs?.length) {
     products = selectedDocs.map((post) => {
-      if (typeof post.value !== 'string') return post.value
+      if (typeof post.value !== 'number') return post.value
     }) as Product[]
   }
 

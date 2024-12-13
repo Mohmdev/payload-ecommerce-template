@@ -5,8 +5,8 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/MediaComponent'
-import { RichText } from '@/components/RichText'
+import { MediaComponent } from '@/components/MediaComponent'
+import RichText from '@/components/RichText'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({
   links,
@@ -26,7 +26,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
     >
       <div className="container relative z-10 mb-8">
         <div className="max-w-[34rem]">
-          <RichText className="mb-6" content={richText} enableGutter={false} />
+          {richText && (
+            <RichText className="mb-6" data={richText} enableGutter={false} />
+          )}
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex gap-4">
               {links.map(({ link }, i) => {
@@ -43,7 +45,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
       <div className="min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
           <React.Fragment>
-            <Media
+            <MediaComponent
               fill
               imgClassName="-z-10 object-cover"
               priority

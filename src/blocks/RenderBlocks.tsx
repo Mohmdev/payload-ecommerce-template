@@ -8,7 +8,8 @@ import { ThreeItemGridBlock } from '@/blocks/ThreeItemGrid/Component'
 import { toKebabCase } from '@/lib/utilities/toKebabCase'
 import React, { Fragment } from 'react'
 
-import type { Page } from '../payload-types'
+import type { Page } from '@/payload-types'
+import { RelatedPosts } from './RelatedPosts/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -17,7 +18,8 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  threeItemGrid: ThreeItemGridBlock
+  threeItemGrid: ThreeItemGridBlock,
+  relatedPosts: RelatedPosts
 }
 
 export const RenderBlocks: React.FC<{

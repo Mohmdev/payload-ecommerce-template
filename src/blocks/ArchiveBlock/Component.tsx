@@ -6,9 +6,9 @@ import type {
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
-import { RichText } from '@/components/RichText'
+import RichText from '@/components/RichText'
 
-import { CollectionArchive } from '../../components/CollectionArchive'
+import { CollectionArchive } from '@/components/CollectionArchive'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -31,7 +31,7 @@ export const ArchiveBlock: React.FC<
 
     const flattenedCategories = categories?.length
       ? categories.map((category) => {
-          if (typeof category === 'string') return category
+          if (typeof category === 'number') return category
           else return category.id
         })
       : null
@@ -54,7 +54,7 @@ export const ArchiveBlock: React.FC<
     products = fetchedProducts.docs
   } else {
     products = selectedDocs?.map((post) => {
-      if (typeof post.value !== 'string') return post.value
+      if (typeof post.value !== 'number') return post.value
     }) as Product[]
   }
 
@@ -64,7 +64,7 @@ export const ArchiveBlock: React.FC<
         <div className="container mb-16">
           <RichText
             className="ml-0 max-w-[48rem]"
-            content={introContent}
+            data={introContent}
             enableGutter={false}
           />
         </div>

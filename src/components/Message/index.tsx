@@ -1,16 +1,5 @@
-import clsx from 'clsx'
 import React from 'react'
-
-/* [
-          classes.message,
-          className,
-          error && classes.error,
-          success && classes.success,
-          warning && classes.warning,
-          !error && !success && !warning && classes.default,
-        ]
-          .filter(Boolean)
-          .join(' '), */
+import { cn } from '@/lib/utilities/cn'
 
 export const Message: React.FC<{
   className?: string
@@ -24,7 +13,7 @@ export const Message: React.FC<{
   if (messageToRender) {
     return (
       <div
-        className={clsx(
+        className={cn(
           'my-8 border border-solid border-border p-4',
           {
             'border-green-500 ': Boolean(success),

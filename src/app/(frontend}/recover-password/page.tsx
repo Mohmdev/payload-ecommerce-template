@@ -4,10 +4,12 @@ import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import React from 'react'
 
 import { RecoverPasswordForm } from './RecoverPasswordForm'
+import PageClient from './page.client'
 
 export default async function RecoverPassword() {
   return (
     <div className="container py-16">
+      <PageClient />
       <RecoverPasswordForm />
     </div>
   )

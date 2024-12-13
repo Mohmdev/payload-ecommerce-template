@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 
 import { RenderParams } from '@/components/RenderParams'
 import { Button } from '@/components/ui/button'
-import { LowImpactHero } from '@/heros/LowImpact'
+import { LowImpactHero } from '@/fields/heros/LowImpact'
 import { getMeUser } from '@/lib/data/getMeUser'
 import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
 import { AccountForm } from './AccountForm'
+import PageClient from './page.client'
 
 export default async function Account() {
   const { user } = await getMeUser({
@@ -19,6 +20,7 @@ export default async function Account() {
 
   return (
     <div>
+      <PageClient />
       <div className="container">
         <RenderParams className="" />
       </div>

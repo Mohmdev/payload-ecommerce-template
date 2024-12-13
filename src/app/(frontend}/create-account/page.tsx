@@ -6,6 +6,7 @@ import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import React from 'react'
 
 import { CreateAccountForm } from './CreateAccountForm'
+import PageClient from './page.client'
 
 export default async function CreateAccount() {
   await getMeUser({
@@ -16,6 +17,7 @@ export default async function CreateAccount() {
 
   return (
     <div className="container">
+      <PageClient />
       <h1 className="mb-4 text-xl">Create Account</h1>
       <RenderParams />
       <CreateAccountForm />

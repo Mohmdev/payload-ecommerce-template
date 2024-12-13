@@ -11,6 +11,7 @@ import { draftMode, headers } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React, { Suspense } from 'react'
+import PageClient from './page.client'
 
 export default async function ProductPage({
   params
@@ -75,6 +76,7 @@ export default async function ProductPage({
         }}
         type="application/ld+json"
       />
+      <PageClient />
       <div className="container">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:py-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
           <div className="h-full w-full basis-full lg:basis-4/6">

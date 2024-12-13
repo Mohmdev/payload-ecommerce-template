@@ -1,12 +1,10 @@
-import { cn } from '@/lib/utilities/cn'
 import React from 'react'
-
-import type { Product } from '@/payload-types'
-
-/* import { Card } from '../Card' */
+import { cn } from '@/lib/utilities/cn'
+import { Card, type CardPostData } from '../Card'
 
 export type Props = {
-  posts: Product[]
+  // posts: Product[] || Post[]
+  posts: CardPostData[]
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
@@ -20,11 +18,15 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             if (typeof result === 'object' && result !== null) {
               return (
                 <div className="col-span-4" key={index}>
-                  {/* <Card className="h-full" doc={result} relationTo="posts" showCategories /> */}
+                  <Card
+                    className="h-full"
+                    doc={result}
+                    relationTo="posts"
+                    showCategories
+                  />
                 </div>
               )
             }
-
             return null
           })}
         </div>

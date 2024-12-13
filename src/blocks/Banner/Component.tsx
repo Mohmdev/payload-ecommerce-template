@@ -2,7 +2,7 @@ import type { BannerBlock as BannerBlockProps } from '@/payload-types'
 
 import { cn } from '@/lib/utilities/cn'
 import React from 'react'
-import { RichText } from '@/components/RichText'
+import RichText from '@/components/RichText'
 
 type Props = BannerBlockProps & {
   className?: string
@@ -21,7 +21,7 @@ export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
       >
         <RichText
           className="classes.richText"
-          content={content}
+          data={content}
           enableGutter={false}
           enableProse={false}
         />

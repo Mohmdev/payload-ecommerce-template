@@ -2,7 +2,7 @@ import type { Order } from '@/payload-types'
 import type { Metadata } from 'next'
 
 import { ItemsList } from '@/components/ItemsList'
-import { Media } from '@/components/MediaComponent'
+import { MediaComponent } from '@/components/MediaComponent'
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
 import { formatDateTime } from '@/lib/utilities/formatDateTime'
@@ -11,6 +11,7 @@ import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React, { Fragment } from 'react'
+import PageClient from '../page.client'
 
 export default async function Order({
   params: { id },
@@ -55,6 +56,7 @@ export default async function Order({
 
   return (
     <div className="container my-16">
+      <PageClient />
       {token && (
         <div className="flex gap-4">
           <Button asChild variant="default">

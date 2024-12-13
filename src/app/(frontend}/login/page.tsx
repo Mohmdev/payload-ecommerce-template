@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import { LoginForm } from './LoginForm'
+import PageClient from './page.client'
 
 export default async function Login() {
   await getMeUser({
@@ -14,6 +15,7 @@ export default async function Login() {
 
   return (
     <div className="container">
+      <PageClient />
       <div className="mx-auto my-12 max-w-xl">
         <RenderParams />
 

@@ -9,6 +9,7 @@ import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
+import PageClient from './page.client'
 
 export default async function Orders() {
   const { token } = await getMeUser({
@@ -44,6 +45,7 @@ export default async function Orders() {
 
   return (
     <div className="container my-16">
+      <PageClient />
       <div className="prose mb-12 dark:prose-invert">
         <h1>Orders</h1>
         {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
